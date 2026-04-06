@@ -300,66 +300,78 @@ For granular analysis of each subsystem, refer to the domain-specific documentat
 <br>
 
 ```
-src/
-├── constants/                  # App constants (BLE UUIDs, theme tokens)
-├── contexts/                   # React contexts (Bluetooth)
-├── db/
-│   └── schema.ts               # Drizzle ORM SQLite schema
-├── hooks/                      # Custom React hooks (sync, health, BLE, sleep)
-├── migrations/                 # SQLite migration definitions
-├── native/                     # JS-side native module wrappers (BLE bridge)
-├── providers/                  # App-level React providers
-├── repositories/
-│   ├── offline/                # Outbox, cursor, ID map, tombstone repositories
-│   └── health/                 # Local projection read models (rollups, sleep, impact)
-├── services/
-│   ├── ble/                    # BLE device communication & binary protocol
-│   │   ├── protocol/           # Binary framing, CRC16, message types
-│   │   ├── ota/                # OTA state machine & post-update verification
-│   │   └── transport/          # Transport layer abstraction
-│   ├── sync/                   # Offline-first sync engines
-│   │   ├── engines/            # Push, Pull, Apply engines & coordinator
-│   │   ├── handlers/           # Entity-specific sync handlers & registry
-│   │   ├── config/             # Entity mappings, SQL builders, transforms
-│   │   ├── repositories/       # Sync-specific repository adapters
-│   │   └── utils/              # Cascade executor, FK resolver, custom merges
-│   ├── health/                 # Health ingestion, upload, projection refresh
-│   │   ├── drivers/            # Native & JS ingestion driver implementations
-│   │   └── types/              # Ingestion driver interfaces
-│   ├── domain/                 # Domain services (session management)
-│   ├── native/                 # Factory reset & keychain wipe services
-│   └── startup/                # Startup orchestrator & metrics
-├── types/                      # Global type declarations (BLE, firmware, Socket.IO)
-├── utils/                      # Logging, errors, crypto, network, time utilities
-└── validation/                 # Outbox payload validation
-
-ios/
-├── AppPlatform/
-│   ├── AppPlatformBLE/         # Native BLE runtime
-│   │   ├── AppPlatformBLECore.swift      # CBCentralManager singleton, state restoration
-│   │   ├── AppPlatformBLEModule.swift    # RCTEventEmitter bridge with EventBuffer
-│   │   └── AppPlatformBLEInitializer.swift
-│   ├── HealthIngest/           # Native health ingestion
-│   │   ├── HealthIngestCore.swift        # Lane-based OperationQueues (HOT/COLD/CHANGE)
-│   │   ├── HealthIngestSQLite.swift      # Atomic C API persistence
-│   │   ├── HealthKitObserver.swift       # Background delivery registration
-│   │   ├── HealthKitQueries.swift        # HKSampleQuery / HKAnchoredObjectQuery
-│   │   └── HealthNormalization.swift     # Unit normalization across sample types
-│   └── FactoryReset/           # Keychain-based reinstall detection & recovery
-│       ├── ReinstallDetector.swift
-│       ├── FactoryResetGuard.swift
-│       └── KeychainWipeModule.swift
-├── AppPlatformTests/
-│   └── HealthIngest/           # Native unit tests (SQLite, normalization, gap math)
-
-android/
-└── app/src/main/java/com/AppPlatformReactNativeApp/
-    ├── appplatformble/         # Android BLE runtime (CoreBluetooth equivalent)
-    │   ├── AppPlatformBLECore.kt
-    │   ├── AppPlatformBLEModule.kt
-    │   └── AppPlatformBleForegroundService.kt
-    ├── MainActivity.kt
-    └── MainApplication.kt
+.
+├── README.md
+├── docs/                                   # Deep-dive technical documentation
+│   ├── architecture.md
+│   ├── data-flow.md
+│   ├── failure-modes.md
+│   ├── health-ingestion.md
+│   ├── nativeBLE.md
+│   └── offline-sync.md
+├── media/
+│   ├── demos/                              # App screen recordings & demo videos
+│   ├── diagrams/                           # Architecture & flow SVGs
+│   └── screenshots/                        # App screenshots (BLE, HealthKit, sync)
+├── src/                                    # TypeScript application source
+│   ├── constants/                          # App constants (BLE UUIDs, theme tokens)
+│   ├── contexts/                           # React contexts (Bluetooth)
+│   ├── db/
+│   │   └── schema.ts                       # Drizzle ORM SQLite schema
+│   ├── hooks/                              # Custom React hooks (sync, health, BLE, sleep)
+│   ├── migrations/                         # SQLite migration definitions
+│   ├── native/                             # JS-side native module wrappers (BLE bridge)
+│   ├── providers/                          # App-level React providers
+│   ├── repositories/
+│   │   ├── offline/                        # Outbox, cursor, ID map, tombstone repositories
+│   │   └── health/                         # Local projection read models (rollups, sleep, impact)
+│   ├── services/
+│   │   ├── ble/                            # BLE device communication & binary protocol
+│   │   │   ├── protocol/                   # Binary framing, CRC16, message types
+│   │   │   ├── ota/                        # OTA state machine & post-update verification
+│   │   │   └── transport/                  # Transport layer abstraction
+│   │   ├── sync/                           # Offline-first sync engines
+│   │   │   ├── engines/                    # Push, Pull, Apply engines & coordinator
+│   │   │   ├── handlers/                   # Entity-specific sync handlers & registry
+│   │   │   ├── config/                     # Entity mappings, SQL builders, transforms
+│   │   │   ├── repositories/               # Sync-specific repository adapters
+│   │   │   └── utils/                      # Cascade executor, FK resolver, custom merges
+│   │   ├── health/                         # Health ingestion, upload, projection refresh
+│   │   │   ├── drivers/                    # Native & JS ingestion driver implementations
+│   │   │   └── types/                      # Ingestion driver interfaces
+│   │   ├── domain/                         # Domain services (session management)
+│   │   ├── native/                         # Factory reset & keychain wipe services
+│   │   └── startup/                        # Startup orchestrator & metrics
+│   ├── types/                              # Global type declarations (BLE, firmware, Socket.IO)
+│   ├── utils/                              # Logging, errors, crypto, network, time utilities
+│   └── validation/                         # Outbox payload validation
+├── ios/                                    # Native iOS source
+│   ├── AppPlatform/
+│   │   ├── AppPlatformBLE/                 # Native BLE runtime
+│   │   │   ├── AppPlatformBLECore.swift    # CBCentralManager singleton, state restoration
+│   │   │   ├── AppPlatformBLEModule.swift  # RCTEventEmitter bridge with EventBuffer
+│   │   │   └── AppPlatformBLEInitializer.swift
+│   │   ├── HealthIngest/                   # Native health ingestion
+│   │   │   ├── HealthIngestCore.swift      # Lane-based OperationQueues (HOT/COLD/CHANGE)
+│   │   │   ├── HealthIngestSQLite.swift    # Atomic C API persistence
+│   │   │   ├── HealthKitObserver.swift     # Background delivery registration
+│   │   │   ├── HealthKitQueries.swift      # HKSampleQuery / HKAnchoredObjectQuery
+│   │   │   └── HealthNormalization.swift   # Unit normalization across sample types
+│   │   └── FactoryReset/                   # Keychain-based reinstall detection & recovery
+│   │       ├── ReinstallDetector.swift
+│   │       ├── FactoryResetGuard.swift
+│   │       └── KeychainWipeModule.swift
+│   └── AppPlatformTests/
+│       └── HealthIngest/                   # Native unit tests (SQLite, normalization, gap math)
+├── android/                                # Native Android source
+│   └── app/src/main/java/com/AppPlatformReactNativeApp/
+│       ├── appplatformble/                 # Android BLE runtime
+│       │   ├── AppPlatformBLECore.kt
+│       │   ├── AppPlatformBLEModule.kt
+│       │   └── AppPlatformBleForegroundService.kt
+│       ├── MainActivity.kt
+│       └── MainApplication.kt
+└── tests/                                  # Test documentation
 ```
 
 </details>
