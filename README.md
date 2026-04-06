@@ -252,7 +252,7 @@ For granular analysis of each subsystem, refer to the domain-specific documentat
 
 ---
 
-<details>
+
 <summary><h2>Technology Stack</h2></summary>
 <br>
 
@@ -291,7 +291,7 @@ For granular analysis of each subsystem, refer to the domain-specific documentat
 </tr>
 </table>
 
-</details>
+
 
 ---
 
