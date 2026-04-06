@@ -1,0 +1,280 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Offline Sync Push Path · Durable Local Mutation to Backend Reconciliation</title>
+  <desc id="desc">Accurate push flow showing atomic local transaction, separated queue lanes, PushEngine ownership, and explicit response handling.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B1220"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,1 L12,7 L0,13 Z" fill="#94A3B8"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <style>
+      .title { font: 700 28px Inter, -apple-system, sans-serif; fill: #F8FAFC; }
+      .subtitle { font: 400 15px Inter, -apple-system, sans-serif; fill: #94A3B8; }
+      .colHeader { font: 700 18px Inter, -apple-system, sans-serif; fill: #E2E8F0; }
+      .cardTitle { font: 700 14px Inter, -apple-system, sans-serif; fill: #F8FAFC; }
+      .cardMeta { font: 400 12px Inter, -apple-system, sans-serif; fill: #CBD5E1; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1200" rx="24" fill="url(#bg)"/>
+  <rect x="32" y="32" width="1536" height="1136" rx="20" fill="none" stroke="#1E293B"/>
+
+  <text x="64" y="80" class="title">Offline Sync Push Path · Durable Local Mutation to Backend Reconciliation</text>
+  <text x="64" y="106" class="subtitle">Complete push lifecycle including atomic commit boundary, explicit PushEngine ownership, independent tombstone lanes, and cache/context updates.</text>
+
+  <!-- Columns -->
+  <rect x="64" y="150" width="300" height="980" rx="16" fill="rgba(30, 41, 59, 0.4)" stroke="#334155"/>
+  <text x="84" y="186" class="colHeader">1. Mutation Producers &amp; Queues</text>
+
+  <rect x="384" y="150" width="1160" height="980" rx="16" fill="rgba(15, 23, 42, 0.5)" stroke="#6D28D9" stroke-dasharray="8,4"/>
+  <text x="404" y="186" class="colHeader" fill="#C4B5FD">PushEngine Execution Scope</text>
+
+  <rect x="404" y="210" width="260" height="900" rx="16" fill="rgba(180, 83, 9, 0.15)" stroke="#D97706"/>
+  <text x="424" y="246" class="colHeader">2. Queue Hygiene</text>
+
+  <rect x="684" y="210" width="260" height="900" rx="16" fill="rgba(30, 58, 138, 0.15)" stroke="#1D4ED8"/>
+  <text x="704" y="246" class="colHeader">3. Normalize &amp; Send</text>
+
+  <rect x="964" y="210" width="260" height="900" rx="16" fill="rgba(76, 29, 149, 0.15)" stroke="#7C3AED"/>
+  <text x="984" y="246" class="colHeader">4. Classification</text>
+
+  <rect x="1244" y="210" width="280" height="900" rx="16" fill="rgba(17, 94, 89, 0.15)" stroke="#0F766E"/>
+  <text x="1264" y="246" class="colHeader">5. Local Reconciliation</text>
+
+  <!-- Atomic Boundary Box -->
+  <rect x="84" y="230" width="260" height="280" rx="12" fill="rgba(15, 23, 42, 0.8)" stroke="#3B82F6" stroke-dasharray="4,4"/>
+  <text x="104" y="260" class="cardMeta" fill="#93C5FD">Atomic SQLite Transaction</text>
+
+  <!-- Flow Lines -->
+  <!-- Col 1 Flow -->
+  <path d="M 214 330 L 214 360" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 214 430 L 214 460 C 214 480 154 480 154 510 L 154 530" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 214 430 L 214 460 C 214 480 274 480 274 510 L 274 530" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  
+  <path d="M 274 610 L 274 650 C 274 670 434 670 434 440" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 154 610 L 154 750 L 734 750" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/> <!-- Tombstone parallel track -->
+
+  <!-- Col 2 Flow -->
+  <path d="M 534 330 L 534 370" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 534 450 L 534 490" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 534 570 L 534 600 C 534 620 714 620 714 440" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Col 3 Flow -->
+  <path d="M 814 330 L 814 370" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 814 450 L 814 490" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 814 570 L 814 610" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  
+  <path d="M 814 690 L 814 710 C 814 730 1004 730 1004 330" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 814 830 L 814 850 C 814 870 1004 870 1004 430" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/> <!-- Tombstone direct to API and response -->
+
+  <!-- Col 4 Flow -->
+  <path d="M 1094 330 L 1094 370" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 1094 450 L 1094 490" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 1094 570 L 1094 610" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  
+  <!-- Col 4 to Col 5 -->
+  <path d="M 1184 290 L 1264 290" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 1184 410 L 1264 410" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 1184 530 L 1264 530" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 1184 650 L 1220 650 L 1220 730 L 1264 730" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Col 5 Flow -->
+  <path d="M 1374 330 L 1374 360" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 1374 440 L 1374 470" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 1374 550 L 1374 580" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 1374 660 L 1374 690" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <path d="M 1374 800 L 1374 830" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 1374 910 L 1374 940" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 1374 1020 L 1374 1050" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+
+  <!-- Col 1: Producers -->
+  <g filter="url(#shadow)">
+    <rect x="104" y="270" width="220" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="114" y="280" width="4" height="40" rx="2" fill="#3B82F6"/>
+  <text x="128" y="294" class="cardTitle">UI / Domain Service</text>
+  <text x="128" y="314" class="cardMeta">Triggers local mutation</text>
+  <text x="128" y="340" class="cardMeta" fill="#FDE68A">(Hybrid API-first fallback annotation)</text>
+
+  <g filter="url(#shadow)">
+    <rect x="104" y="370" width="220" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="114" y="380" width="4" height="40" rx="2" fill="#10B981"/>
+  <text x="128" y="394" class="cardTitle">Local Entity Repository</text>
+  <text x="128" y="414" class="cardMeta">Write to local domain table</text>
+
+  <g filter="url(#shadow)">
+    <rect x="184" y="530" width="140" height="80" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="194" y="540" width="4" height="60" rx="2" fill="#3B82F6"/>
+  <text x="208" y="554" class="cardTitle">Outbox Queue</text>
+  <text x="208" y="574" class="cardMeta">CREATE / UPDATE</text>
+  <text x="208" y="594" class="cardMeta">/ DELETE</text>
+
+  <g filter="url(#shadow)">
+    <rect x="84" y="530" width="100" height="80" rx="12" fill="#0F172A" stroke="#A78BFA"/>
+  </g>
+  <rect x="94" y="540" width="4" height="60" rx="2" fill="#A78BFA"/>
+  <text x="108" y="554" class="cardTitle">Tombstone</text>
+  <text x="108" y="574" class="cardMeta">Soft-deletes</text>
+
+  <!-- Col 2: Hygiene -->
+  <g filter="url(#shadow)">
+    <rect x="424" y="270" width="220" height="60" rx="12" fill="#32131A" stroke="#EF4444"/>
+  </g>
+  <rect x="434" y="280" width="4" height="40" rx="2" fill="#EF4444"/>
+  <text x="448" y="294" class="cardTitle">Retry Exhaustion Sweep</text>
+  <text x="448" y="314" class="cardMeta">FAILED > retries -> DEAD_LETTER</text>
+
+  <g filter="url(#shadow)">
+    <rect x="424" y="370" width="220" height="80" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="434" y="380" width="4" height="60" rx="2" fill="#F59E0B"/>
+  <text x="448" y="394" class="cardTitle">Deduplicated Dequeue</text>
+  <text x="448" y="414" class="cardMeta">Fetch actionable rows</text>
+  <text x="448" y="434" class="cardMeta">Collapse multiples to latest</text>
+
+  <g filter="url(#shadow)">
+    <rect x="424" y="490" width="220" height="80" rx="12" fill="#1E293B" stroke="#475569"/>
+  </g>
+  <rect x="434" y="500" width="4" height="60" rx="2" fill="#10B981"/>
+  <text x="448" y="514" class="cardTitle">Close Superseded</text>
+  <text x="448" y="534" class="cardMeta">Mark net no-ops (Create+Del)</text>
+  <text x="448" y="554" class="cardMeta">immediately COMPLETED</text>
+
+  <!-- Col 3: Normalize & Send -->
+  <g filter="url(#shadow)">
+    <rect x="704" y="270" width="220" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="714" y="280" width="4" height="40" rx="2" fill="#3B82F6"/>
+  <text x="728" y="294" class="cardTitle">FK Resolution</text>
+  <text x="728" y="314" class="cardMeta">Translate via IdMapRepository</text>
+
+  <g filter="url(#shadow)">
+    <rect x="704" y="370" width="220" height="80" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="714" y="380" width="4" height="60" rx="2" fill="#A78BFA"/>
+  <text x="728" y="394" class="cardTitle">Dependency Ordering</text>
+  <text x="728" y="414" class="cardMeta">CREATE > UPDATE > DELETE.</text>
+  <text x="728" y="434" class="cardMeta">Parents before children.</text>
+
+  <g filter="url(#shadow)">
+    <rect x="704" y="490" width="220" height="80" rx="12" fill="#0F172A" stroke="#10B981"/>
+  </g>
+  <rect x="714" y="500" width="4" height="60" rx="2" fill="#10B981"/>
+  <text x="728" y="514" class="cardTitle">Backend API Client (Outbox)</text>
+  <text x="728" y="534" class="cardMeta">Generates syncOperationId</text>
+  <text x="728" y="554" class="cardMeta">POST /sync/push</text>
+
+  <g filter="url(#shadow)">
+    <rect x="704" y="610" width="220" height="80" rx="12" fill="#0F172A" stroke="#A78BFA"/>
+  </g>
+  <rect x="714" y="620" width="4" height="60" rx="2" fill="#C4B5FD"/>
+  <text x="728" y="634" class="cardTitle">Backend API Client (Tomb)</text>
+  <text x="728" y="654" class="cardMeta">Parallel / subsequent push</text>
+  <text x="728" y="674" class="cardMeta">POST /sync/deletes</text>
+
+  <g filter="url(#shadow)">
+    <rect x="704" y="750" width="220" height="80" rx="12" fill="#0F172A" stroke="#10B981"/>
+  </g>
+  <rect x="714" y="760" width="4" height="60" rx="2" fill="#10B981"/>
+  <text x="728" y="774" class="cardTitle">Backend API</text>
+  <text x="728" y="794" class="cardMeta">Processes batches</text>
+  <text x="728" y="814" class="cardMeta">Returns Item Outcomes</text>
+
+
+  <!-- Col 4: Classification -->
+  <g filter="url(#shadow)">
+    <rect x="984" y="260" width="200" height="60" rx="12" fill="#064E3B" stroke="#10B981"/>
+  </g>
+  <rect x="994" y="270" width="4" height="40" rx="2" fill="#10B981"/>
+  <text x="1008" y="284" class="cardTitle">Success</text>
+  <text x="1008" y="304" class="cardMeta">Data accepted by backend</text>
+
+  <g filter="url(#shadow)">
+    <rect x="984" y="380" width="200" height="60" rx="12" fill="#451A03" stroke="#F59E0B"/>
+  </g>
+  <rect x="994" y="390" width="4" height="40" rx="2" fill="#F59E0B"/>
+  <text x="1008" y="404" class="cardTitle">Retryable Failure</text>
+  <text x="1008" y="424" class="cardMeta">Network / 5xx / Rate Limits</text>
+
+  <g filter="url(#shadow)">
+    <rect x="984" y="500" width="200" height="60" rx="12" fill="#450A0A" stroke="#EF4444"/>
+  </g>
+  <rect x="994" y="510" width="4" height="40" rx="2" fill="#EF4444"/>
+  <text x="1008" y="524" class="cardTitle">Terminal Failure</text>
+  <text x="1008" y="544" class="cardMeta">Schema validation / 4xx</text>
+
+  <g filter="url(#shadow)">
+    <rect x="984" y="620" width="200" height="60" rx="12" fill="#2E1065" stroke="#8B5CF6"/>
+  </g>
+  <rect x="994" y="630" width="4" height="40" rx="2" fill="#C4B5FD"/>
+  <text x="1008" y="644" class="cardTitle">Conflict</text>
+  <text x="1008" y="664" class="cardMeta">See Conflict Diagram</text>
+
+  <!-- Col 5: Local Reconciliation -->
+  <g filter="url(#shadow)">
+    <rect x="1264" y="260" width="240" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="1274" y="270" width="4" height="40" rx="2" fill="#3B82F6"/>
+  <text x="1288" y="284" class="cardTitle">IdMapRepository</text>
+  <text x="1288" y="304" class="cardMeta">Save clientId -> serverId</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1264" y="370" width="240" height="60" rx="12" fill="#1E3A8A" stroke="#3B82F6"/>
+  </g>
+  <rect x="1274" y="380" width="4" height="40" rx="2" fill="#93C5FD"/>
+  <text x="1288" y="394" class="cardTitle">ID Strategy Split</text>
+  <text x="1288" y="414" class="cardMeta">Replace PK (Cascade) OR server_id</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1264" y="480" width="240" height="60" rx="12" fill="#064E3B" stroke="#10B981"/>
+  </g>
+  <rect x="1274" y="490" width="4" height="40" rx="2" fill="#10B981"/>
+  <text x="1288" y="504" class="cardTitle">Outbox: COMPLETED</text>
+  <text x="1288" y="524" class="cardMeta">Mutation durably synchronized</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1264" y="590" width="240" height="60" rx="12" fill="#1E293B" stroke="#10B981"/>
+  </g>
+  <rect x="1274" y="600" width="4" height="40" rx="2" fill="#A7F3D0"/>
+  <text x="1288" y="614" class="cardTitle">Tombstone: SYNCED</text>
+  <text x="1288" y="634" class="cardMeta">Delete propagated</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1264" y="700" width="240" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="1274" y="710" width="4" height="40" rx="2" fill="#A78BFA"/>
+  <text x="1288" y="724" class="cardTitle">Invalidate Query Cache</text>
+  <text x="1288" y="744" class="cardMeta">Trigger UI refresh</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1264" y="810" width="240" height="60" rx="12" fill="#2E1065" stroke="#8B5CF6"/>
+  </g>
+  <rect x="1274" y="820" width="4" height="40" rx="2" fill="#C4B5FD"/>
+  <text x="1288" y="834" class="cardTitle">Record Touched IDs</text>
+  <text x="1288" y="854" class="cardMeta">For post-run IntegrityGate validation</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1264" y="920" width="240" height="60" rx="12" fill="#451A03" stroke="#F59E0B"/>
+  </g>
+  <rect x="1274" y="930" width="4" height="40" rx="2" fill="#F59E0B"/>
+  <text x="1288" y="944" class="cardTitle">Outbox: FAILED</text>
+  <text x="1288" y="964" class="cardMeta">Retry state incremented</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1264" y="1030" width="240" height="60" rx="12" fill="#450A0A" stroke="#EF4444"/>
+  </g>
+  <rect x="1274" y="1040" width="4" height="40" rx="2" fill="#EF4444"/>
+  <text x="1288" y="1054" class="cardTitle">Outbox: DEAD_LETTER</text>
+  <text x="1288" y="1074" class="cardMeta">Terminal queue</text>
+
+</svg>

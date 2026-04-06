@@ -1,0 +1,491 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1680 1050" width="100%" height="100%" style="background-color: #0d131b; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bg-app" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111821" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0d131b" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="grad-native" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#181325"/>
+      <stop offset="100%" stop-color="#100C18"/>
+    </linearGradient>
+    <linearGradient id="grad-corridor-ble" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0A1815"/>
+      <stop offset="100%" stop-color="#060F0D"/>
+    </linearGradient>
+    <linearGradient id="grad-corridor-health" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#081A12"/>
+      <stop offset="100%" stop-color="#05120C"/>
+    </linearGradient>
+    <linearGradient id="grad-corridor-sync" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1C0E14"/>
+      <stop offset="100%" stop-color="#12080D"/>
+    </linearGradient>
+    <linearGradient id="grad-local" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0C1A2C"/>
+      <stop offset="100%" stop-color="#08121E"/>
+    </linearGradient>
+    <linearGradient id="grad-rail" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#18140D"/>
+      <stop offset="100%" stop-color="#0D0B06"/>
+    </linearGradient>
+    <linearGradient id="grad-backend" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B1826"/>
+      <stop offset="100%" stop-color="#070F1A"/>
+    </linearGradient>
+    
+    <!-- Shadows -->
+    <filter id="shadow-md" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <filter id="shadow-sm" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+
+    <!-- Arrow Markers -->
+    <marker id="arrow-amber" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#F59E0B"/>
+    </marker>
+    <marker id="arrow-cyan" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#06B6D4"/>
+    </marker>
+    <marker id="arrow-violet" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#A78BFA"/>
+    </marker>
+    <marker id="arrow-blue-solid" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#3B82F6"/>
+    </marker>
+    <marker id="arrow-blue-dash" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#60A5FA"/>
+    </marker>
+  </defs>
+
+  <!-- ========================================================================= -->
+  <!-- 1. TOP TRIGGER BAND & LEGEND -->
+  <!-- ========================================================================= -->
+  <g id="trigger-band">
+    <rect x="220" y="30" width="110" height="28" rx="14" fill="#1E1B4B" stroke="#8B5CF6" stroke-width="1.2"/>
+    <text x="275" y="49" fill="#E2E8F0" font-size="12" font-weight="600" text-anchor="middle">User Actions</text>
+
+    <rect x="345" y="30" width="130" height="28" rx="14" fill="#1E1B4B" stroke="#8B5CF6" stroke-width="1.2"/>
+    <text x="410" y="49" fill="#E2E8F0" font-size="12" font-weight="600" text-anchor="middle">Cold Launch / Init</text>
+
+    <rect x="490" y="30" width="130" height="28" rx="14" fill="#1E1B4B" stroke="#8B5CF6" stroke-width="1.2"/>
+    <text x="555" y="49" fill="#E2E8F0" font-size="12" font-weight="600" text-anchor="middle">Foreground App</text>
+
+    <rect x="635" y="30" width="150" height="28" rx="14" fill="#1E1B4B" stroke="#8B5CF6" stroke-width="1.2"/>
+    <text x="710" y="49" fill="#E2E8F0" font-size="12" font-weight="600" text-anchor="middle">Network Reconnect</text>
+    
+    <rect x="800" y="30" width="140" height="28" rx="14" fill="#1E1B4B" stroke="#8B5CF6" stroke-width="1.2"/>
+    <text x="870" y="49" fill="#E2E8F0" font-size="12" font-weight="600" text-anchor="middle">WebSocket Event</text>
+    
+    <!-- Shared Wake Bus -->
+    <path d="M 275 58 V 70 H 870 V 58" stroke="#A78BFA" stroke-width="1.5" stroke-dasharray="4 3" fill="none" stroke-linejoin="round"/>
+    <!-- Split at UI box (y=150-200) so lines do not pass through it -->
+    <path d="M 275 70 V 150" stroke="#A78BFA" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+    <path d="M 275 200 V 240" stroke="#A78BFA" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arrow-violet)"/>
+    <path d="M 410 70 V 150" stroke="#A78BFA" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+    <path d="M 410 200 V 240" stroke="#A78BFA" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arrow-violet)"/>
+    <path d="M 555 70 V 150" stroke="#A78BFA" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+    <path d="M 555 200 V 240" stroke="#A78BFA" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arrow-violet)"/>
+    <path d="M 710 70 V 150" stroke="#A78BFA" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+    <path d="M 710 200 V 240" stroke="#A78BFA" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arrow-violet)"/>
+    
+    <!-- Legend (All symbols contained within box) -->
+    <rect x="1350" y="20" width="310" height="60" rx="6" fill="#111827" stroke="#334155"/>
+    <text x="1360" y="38" fill="#94A3B8" font-size="11" font-weight="600">Semantics:</text>
+    <line x1="1420" y1="34" x2="1450" y2="34" stroke="#A78BFA" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arrow-violet)"/>
+    <text x="1458" y="38" fill="#94A3B8" font-size="10">OS/App Wake</text>
+    <line x1="1535" y1="34" x2="1565" y2="34" stroke="#F59E0B" stroke-width="1.5" fill="none" marker-end="url(#arrow-amber)"/>
+    <text x="1573" y="38" fill="#94A3B8" font-size="10">Control/Seq</text>
+    <line x1="1360" y1="58" x2="1390" y2="58" stroke="#06B6D4" stroke-width="1.5" fill="none" marker-end="url(#arrow-cyan)"/>
+    <text x="1398" y="62" fill="#94A3B8" font-size="10">Data/Net I/O</text>
+    <line x1="1468" y1="58" x2="1498" y2="58" stroke="#3B82F6" stroke-width="2" fill="none" marker-end="url(#arrow-blue-solid)"/>
+    <text x="1506" y="62" fill="#94A3B8" font-size="10">Local Commit</text>
+    <line x1="1576" y1="58" x2="1596" y2="58" stroke="#60A5FA" stroke-width="1.5" stroke-dasharray="3 3" fill="none" marker-end="url(#arrow-blue-dash)"/>
+    <text x="1604" y="62" fill="#94A3B8" font-size="10">UI Read</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 2. EXTERNAL SOURCES (LEFT INGRESS) -->
+  <!-- ========================================================================= -->
+  <g id="external-left">
+    <rect x="30" y="290" width="140" height="60" rx="8" fill="#111827" stroke="#334155" filter="url(#shadow-md)"/>
+    <text x="100" y="315" fill="#E2E8F0" font-size="13" font-weight="700" text-anchor="middle">BLE Device</text>
+    <text x="100" y="335" fill="#94A3B8" font-size="11" text-anchor="middle">Sensors, Protocol</text>
+    
+    <rect x="30" y="245" width="120" height="24" rx="12" fill="#1E1B4B" stroke="#8B5CF6" stroke-width="1"/>
+    <text x="90" y="261" fill="#C4B5FD" font-size="11" font-weight="600" text-anchor="middle">OS BLE Wake</text>
+    <path d="M 90 269 V 290" stroke="#A78BFA" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arrow-violet)"/>
+
+    <rect x="30" y="480" width="140" height="60" rx="8" fill="#111827" stroke="#334155" filter="url(#shadow-md)"/>
+    <text x="100" y="505" fill="#E2E8F0" font-size="13" font-weight="700" text-anchor="middle">HealthKit (iOS)</text>
+    <text x="100" y="525" fill="#94A3B8" font-size="11" text-anchor="middle">Raw Data, Background</text>
+
+    <rect x="30" y="435" width="140" height="24" rx="12" fill="#1E1B4B" stroke="#8B5CF6" stroke-width="1"/>
+    <text x="100" y="451" fill="#C4B5FD" font-size="11" font-weight="600" text-anchor="middle">HK Background Wake</text>
+    <path d="M 100 459 V 480" stroke="#A78BFA" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arrow-violet)"/>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN APP-SIDE PLATFORM FRAME -->
+  <!-- ========================================================================= -->
+  <rect x="200" y="100" width="1210" height="910" rx="16" fill="url(#bg-app)" stroke="#1E293B" stroke-width="2"/>
+  <text x="230" y="130" fill="#94A3B8" font-size="14" font-weight="600" letter-spacing="0.5">App-Side Platform Boundary</text>
+
+  <!-- ========================================================================= -->
+  <!-- 3. UI / APP SHELL -->
+  <!-- ========================================================================= -->
+  <rect x="230" y="150" width="910" height="50" rx="8" fill="#1E293B" stroke="#334155" filter="url(#shadow-sm)"/>
+  <text x="250" y="180" fill="#F8FAFC" font-size="15" font-weight="700">UI / App Shell / React Query Cache</text>
+  <text x="520" y="180" fill="#94A3B8" font-size="12">Reactive local reads. Actions dispatched to domain services.</text>
+
+  <!-- ========================================================================= -->
+  <!-- 4. NATIVE RUNTIME & BRIDGE -->
+  <!-- ========================================================================= -->
+  <g id="native-runtime">
+    <rect x="230" y="240" width="220" height="390" rx="10" fill="url(#grad-native)" stroke="#5B21B6" stroke-width="1.2" stroke-opacity="0.6"/>
+    <text x="250" y="270" fill="#C4B5FD" font-size="14" font-weight="700">Native Runtime &amp; Bridge</text>
+    <text x="250" y="295" fill="#8B5CF6" font-size="11" font-weight="600">iOS PLATFORM OWNERSHIP</text>
+    
+    <rect x="245" y="305" width="190" height="36" rx="6" fill="#111827" stroke="#4C1D95" stroke-opacity="0.6"/>
+    <text x="255" y="321" fill="#E2E8F0" font-size="12" font-weight="600">AppDelegate.mm</text>
+    <text x="255" y="335" fill="#94A3B8" font-size="10">Early Init &amp; OS Hooks</text>
+
+    <rect x="245" y="350" width="190" height="36" rx="6" fill="#111827" stroke="#4C1D95" stroke-opacity="0.6"/>
+    <text x="255" y="366" fill="#E2E8F0" font-size="12" font-weight="600">TrakPlusBLECore</text>
+    <text x="255" y="380" fill="#94A3B8" font-size="10">willRestoreState, GATT</text>
+
+    <rect x="245" y="395" width="190" height="48" rx="6" fill="#111827" stroke="#4C1D95" stroke-opacity="0.6"/>
+    <text x="255" y="411" fill="#E2E8F0" font-size="12" font-weight="600">HealthIngestCore</text>
+    <text x="255" y="425" fill="#F43F5E" font-size="10" font-weight="600">Hot / Cold / Change Lanes</text>
+    <text x="255" y="437" fill="#94A3B8" font-size="10">Query Timeouts, Norm.</text>
+
+    <rect x="245" y="452" width="190" height="36" rx="6" fill="#111827" stroke="#4C1D95" stroke-opacity="0.6"/>
+    <text x="255" y="468" fill="#E2E8F0" font-size="12" font-weight="600">HealthKitObserver</text>
+    <text x="255" y="482" fill="#94A3B8" font-size="10">HKObserverQuery Reg.</text>
+
+    <!-- Handoff -->
+    <path d="M 245 510 H 435" stroke="#334155" stroke-dasharray="2 2" fill="none"/>
+    <text x="250" y="530" fill="#8B5CF6" font-size="11" font-weight="600">JS HANDOFF</text>
+
+    <rect x="245" y="540" width="190" height="36" rx="6" fill="#0F172A" stroke="#6D28D9" stroke-opacity="0.6"/>
+    <text x="255" y="556" fill="#C4B5FD" font-size="12" font-weight="600">Bridge &amp; EventBuffers</text>
+    <text x="255" y="570" fill="#94A3B8" font-size="10">NativeModules, Event Emitter</text>
+    
+    <rect x="245" y="585" width="190" height="36" rx="6" fill="#1E293B" stroke="#6366F1" stroke-opacity="0.6"/>
+    <text x="255" y="601" fill="#A5B4FC" font-size="12" font-weight="600">TS Integration Hooks</text>
+    <text x="255" y="615" fill="#94A3B8" font-size="10">useTrakPlusBLEIntegration</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 5. APP COMPOSITION & ORCHESTRATION -->
+  <!-- ========================================================================= -->
+  <g id="orchestration">
+    <rect x="480" y="240" width="660" height="90" rx="10" fill="#111827" stroke="#334155"/>
+    <text x="500" y="265" fill="#F8FAFC" font-size="14" font-weight="700">App Composition &amp; Orchestration</text>
+    <text x="740" y="264" fill="#94A3B8" font-size="12">Service Coordination &amp; Global State</text>
+
+    <rect x="500" y="280" width="145" height="36" rx="6" fill="#1E293B" stroke="#334155"/>
+    <text x="510" y="296" fill="#E2E8F0" font-size="12" font-weight="600">AppProvider</text>
+    <text x="510" y="310" fill="#94A3B8" font-size="10">Root React Context</text>
+
+    <rect x="655" y="280" width="145" height="36" rx="6" fill="#1E293B" stroke="#334155"/>
+    <text x="665" y="296" fill="#E2E8F0" font-size="12" font-weight="600">StartupOrchestrator</text>
+    <text x="665" y="310" fill="#94A3B8" font-size="10">Phased Initialization</text>
+
+    <rect x="810" y="280" width="150" height="36" rx="6" fill="#1E293B" stroke="#334155"/>
+    <text x="820" y="296" fill="#E2E8F0" font-size="12" font-weight="600">BluetoothHandler</text>
+    <text x="820" y="310" fill="#94A3B8" font-size="10">JS BLE Singleton State</text>
+
+    <rect x="970" y="280" width="150" height="36" rx="6" fill="#1E293B" stroke="#334155"/>
+    <text x="980" y="296" fill="#E2E8F0" font-size="12" font-weight="600">Domain Services</text>
+    <text x="980" y="310" fill="#94A3B8" font-size="10">Consumption, Session...</text>
+
+    <!-- Orchestration Control Spines (Clean, equal drop) -->
+    <path d="M 580 316 V 390" stroke="#F59E0B" stroke-width="1.5" fill="none" marker-end="url(#arrow-amber)"/>
+    <path d="M 800 316 V 390" stroke="#F59E0B" stroke-width="1.5" fill="none" marker-end="url(#arrow-amber)"/>
+    <path d="M 1030 316 V 390" stroke="#F59E0B" stroke-width="1.5" fill="none" marker-end="url(#arrow-amber)"/>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 6. THREE PIPELINE CORRIDORS -->
+  <!-- ========================================================================= -->
+
+  <!-- 6a. BLE / Device Corridor -->
+  <g id="corridor-ble">
+    <rect x="480" y="390" width="200" height="240" rx="10" fill="url(#grad-corridor-ble)" stroke="#10B981" stroke-opacity="0.4" stroke-width="1.5"/>
+    <line x1="495" y1="440" x2="495" y2="610" stroke="#059669" stroke-opacity="0.3" stroke-width="2" fill="none"/>
+    
+    <text x="510" y="415" fill="#34D399" font-size="13" font-weight="700">BLE / Device</text>
+    <text x="510" y="430" fill="#059669" font-size="11" font-weight="600">Protocol Orchestration</text>
+
+    <rect x="510" y="450" width="160" height="36" rx="6" fill="#064E3B" fill-opacity="0.6"/>
+    <text x="520" y="466" fill="#E2E8F0" font-size="12" font-weight="600">TrakPlusProtocol</text>
+    <text x="520" y="480" fill="#A7F3D0" font-size="10">Binary Framing, ACK</text>
+
+    <rect x="510" y="495" width="160" height="36" rx="6" fill="#064E3B" fill-opacity="0.6"/>
+    <text x="520" y="511" fill="#E2E8F0" font-size="12" font-weight="600">EventSyncService</text>
+    <text x="520" y="525" fill="#A7F3D0" font-size="10">Hit Processing</text>
+
+    <rect x="510" y="540" width="160" height="36" rx="6" fill="#064E3B" fill-opacity="0.6"/>
+    <text x="520" y="556" fill="#E2E8F0" font-size="12" font-weight="600">DeviceSettings</text>
+    <text x="520" y="570" fill="#A7F3D0" font-size="10">Config Sync, Reset Detect</text>
+  </g>
+
+  <!-- 6b. Health Corridor -->
+  <g id="corridor-health">
+    <rect x="700" y="390" width="200" height="240" rx="10" fill="url(#grad-corridor-health)" stroke="#22C55E" stroke-opacity="0.4" stroke-width="1.5"/>
+    <line x1="715" y1="440" x2="715" y2="610" stroke="#16A34A" stroke-opacity="0.3" stroke-width="2" fill="none"/>
+
+    <text x="730" y="415" fill="#4ADE80" font-size="13" font-weight="700">Health Corridor</text>
+    <text x="730" y="430" fill="#16A34A" font-size="11" font-weight="600">Upload &amp; Projections</text>
+
+    <rect x="730" y="450" width="160" height="36" rx="6" fill="#14532D" fill-opacity="0.7"/>
+    <text x="740" y="466" fill="#E2E8F0" font-size="12" font-weight="600">HealthSyncService</text>
+    <text x="740" y="480" fill="#BBF7D0" font-size="10">Pipeline Orchestrator</text>
+
+    <rect x="730" y="495" width="160" height="36" rx="6" fill="#14532D" fill-opacity="0.7"/>
+    <text x="740" y="511" fill="#E2E8F0" font-size="12" font-weight="600">HealthUploadEngine</text>
+    <text x="740" y="525" fill="#BBF7D0" font-size="10">Batch Upsert</text>
+
+    <rect x="730" y="540" width="160" height="36" rx="6" fill="#14532D" fill-opacity="0.7"/>
+    <text x="740" y="556" fill="#E2E8F0" font-size="12" font-weight="600">ProjectionRefresh</text>
+    <text x="740" y="570" fill="#BBF7D0" font-size="10">Hydrates via Dirty Keys</text>
+  </g>
+
+  <!-- 6c. Entity Sync Corridor -->
+  <g id="corridor-sync">
+    <rect x="920" y="390" width="220" height="240" rx="10" fill="url(#grad-corridor-sync)" stroke="#F43F5E" stroke-opacity="0.4" stroke-width="1.5"/>
+    <line x1="935" y1="440" x2="935" y2="610" stroke="#BE123C" stroke-opacity="0.3" stroke-width="2" fill="none"/>
+
+    <text x="950" y="415" fill="#FB7185" font-size="13" font-weight="700">Entity Sync Corridor</text>
+    <text x="950" y="430" fill="#E11D48" font-size="11" font-weight="600">Outbox &amp; Pull Convergence</text>
+
+    <rect x="950" y="450" width="180" height="36" rx="6" fill="#4C0519" fill-opacity="0.7"/>
+    <text x="960" y="466" fill="#E2E8F0" font-size="12" font-weight="600">DataSyncService</text>
+    <text x="960" y="480" fill="#FECDD3" font-size="10">SyncCoordinator &amp; State</text>
+
+    <rect x="950" y="495" width="180" height="48" rx="6" fill="#4C0519" fill-opacity="0.7"/>
+    <text x="960" y="511" fill="#E2E8F0" font-size="12" font-weight="600">Push / Pull / Apply</text>
+    <text x="960" y="525" fill="#FECDD3" font-size="10">FK Resolve, Fetch Cursor,</text>
+    <text x="960" y="537" fill="#FECDD3" font-size="10">Conflict Merge</text>
+
+    <rect x="950" y="552" width="180" height="36" rx="6" fill="#881337"/>
+    <text x="960" y="568" fill="#FFE4E6" font-size="12" font-weight="700">IntegrityGate</text>
+    <text x="960" y="582" fill="#FDA4AF" font-size="10">Validates FKs Before Commit</text>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 7. SHARED LOCAL DATA FOUNDATION -->
+  <!-- ========================================================================= -->
+  <!-- Title floats above the box so blue bus drops never cross text -->
+  <text x="250" y="684" fill="#60A5FA" font-size="14" font-weight="700">Shared Local Data Foundation</text>
+  <text x="490" y="684" fill="#94A3B8" font-size="11">SQLite + Drizzle ORM (Operational Source of Truth)</text>
+
+  <g id="local-data">
+    <rect x="230" y="690" width="910" height="280" rx="12" fill="url(#grad-local)" stroke="#1E293B" stroke-width="2" filter="url(#shadow-sm)"/>
+
+    <!-- Domain Data -->
+    <rect x="250" y="740" width="190" height="210" rx="8" fill="#0F172A" stroke="#1E293B"/>
+    <text x="265" y="765" fill="#E2E8F0" font-size="13" font-weight="600">Domain Data</text>
+    <text x="265" y="780" fill="#94A3B8" font-size="11">Synced Entities</text>
+    <rect x="265" y="795" width="160" height="24" rx="4" fill="#1E293B"/>
+    <text x="275" y="811" fill="#CBD5E1" font-size="11">LocalSessionRepo</text>
+    <rect x="265" y="825" width="160" height="24" rx="4" fill="#1E293B"/>
+    <text x="275" y="841" fill="#CBD5E1" font-size="11">LocalProductRepo</text>
+    <rect x="265" y="855" width="160" height="24" rx="4" fill="#1E293B"/>
+    <text x="275" y="871" fill="#CBD5E1" font-size="11">LocalDeviceRepo</text>
+    <rect x="265" y="885" width="160" height="24" rx="4" fill="#1E293B"/>
+    <text x="275" y="901" fill="#94A3B8" font-size="11">Other Domain Repos...</text>
+
+    <!-- Sync Metadata -->
+    <rect x="460" y="740" width="200" height="210" rx="8" fill="#1C1420" stroke="#4C1D95" stroke-opacity="0.5"/>
+    <text x="475" y="765" fill="#E879F9" font-size="13" font-weight="600">Sync Metadata</text>
+    <text x="475" y="780" fill="#94A3B8" font-size="11">Offline Infrastructure</text>
+    <rect x="475" y="795" width="170" height="40" rx="4" fill="#2E1065"/>
+    <text x="485" y="811" fill="#E9D5FF" font-size="11" font-weight="600">OutboxRepository</text>
+    <text x="485" y="825" fill="#C084FC" font-size="10">Command Queue</text>
+    <rect x="475" y="845" width="170" height="40" rx="4" fill="#2E1065"/>
+    <text x="485" y="861" fill="#E9D5FF" font-size="11" font-weight="600">CursorRepository</text>
+    <text x="485" y="875" fill="#C084FC" font-size="10">Monotonic Progress</text>
+    <rect x="475" y="895" width="170" height="24" rx="4" fill="#2E1065"/>
+    <text x="485" y="911" fill="#E9D5FF" font-size="11">IdMap / Tombstones</text>
+
+    <!-- Health Operational Store -->
+    <rect x="680" y="740" width="200" height="210" rx="8" fill="#0A1F1C" stroke="#065F46" stroke-opacity="0.6"/>
+    <text x="695" y="765" fill="#34D399" font-size="13" font-weight="600">Health Operational</text>
+    <text x="695" y="780" fill="#94A3B8" font-size="11">Raw Native Truth</text>
+    <rect x="695" y="795" width="170" height="40" rx="4" fill="#064E3B"/>
+    <text x="705" y="811" fill="#D1FAE5" font-size="11" font-weight="600">HealthSampleRepo</text>
+    <text x="705" y="825" fill="#34D399" font-size="10">Atomic Insert &amp; CAS</text>
+    <rect x="695" y="845" width="170" height="24" rx="4" fill="#064E3B"/>
+    <text x="705" y="861" fill="#D1FAE5" font-size="11">HealthCursorRepo</text>
+    <rect x="695" y="875" width="170" height="24" rx="4" fill="#064E3B"/>
+    <text x="705" y="891" fill="#D1FAE5" font-size="11">DeletionQueueRepo</text>
+    <rect x="695" y="905" width="170" height="24" rx="4" fill="#064E3B"/>
+    <text x="705" y="921" fill="#D1FAE5" font-size="11">DirtyKey Queues</text>
+
+    <!-- Projections -->
+    <rect x="900" y="740" width="220" height="120" rx="8" fill="#1E293B" stroke="#334155"/>
+    <text x="915" y="765" fill="#93C5FD" font-size="13" font-weight="600">Local Read Models</text>
+    <text x="915" y="780" fill="#94A3B8" font-size="11">Hydrated Projections</text>
+    <rect x="915" y="795" width="190" height="24" rx="4" fill="#0F172A"/>
+    <text x="925" y="811" fill="#CBD5E1" font-size="11">Health Rollups</text>
+    <rect x="915" y="825" width="190" height="24" rx="4" fill="#0F172A"/>
+    <text x="925" y="841" fill="#CBD5E1" font-size="11">Sleep Summaries</text>
+    <rect x="915" y="855" width="190" height="24" rx="4" fill="#0F172A"/>
+    <text x="925" y="871" fill="#CBD5E1" font-size="11">Health Insights...</text>
+
+    <!-- Secure Storage -->
+    <rect x="900" y="880" width="220" height="70" rx="8" fill="#111827" stroke="#334155"/>
+    <text x="915" y="905" fill="#F8FAFC" font-size="13" font-weight="600">Secure Storage</text>
+    <rect x="915" y="915" width="190" height="24" rx="4" fill="#1E293B"/>
+    <text x="925" y="931" fill="#CBD5E1" font-size="11">Auth Tokens, Device IDs</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 8. ORTHOGONAL ROUTING DATA BUSES (Strictly avoiding text) -->
+  <!-- ========================================================================= -->
+  
+  <g id="data-flows">
+    <!-- UI Read Bus (Dashed Blue) -> Routing precisely in the vertical gutters -->
+    <path d="M 345 740 V 688 H 465 V 200" stroke="#60A5FA" stroke-width="1.5" stroke-dasharray="4 4" fill="none" stroke-linejoin="round" marker-end="url(#arrow-blue-dash)"/>
+    
+
+    
+
+    <!-- UI to Domain Service (Solid Cyan) -->
+    <path d="M 1045 200 V 280" stroke="#06B6D4" stroke-width="1.2" stroke-dasharray="3 3" fill="none" marker-end="url(#arrow-cyan)"/>
+
+    <!-- Atomic Outbox Write (Solid Blue) -> Bus at y=700, 40px above sub-boxes -->
+    <path d="M 1045 316 V 370 H 910 V 700 H 345 V 740" stroke="#3B82F6" stroke-width="2" fill="none" stroke-linejoin="round" marker-end="url(#arrow-blue-solid)"/>
+    <path d="M 910 700 H 560 V 740" stroke="#3B82F6" stroke-width="2" fill="none" stroke-linejoin="round" marker-end="url(#arrow-blue-solid)"/>
+
+    <!-- Native Atomic Insert & CAS (Solid Blue) -> Bus at y=700, 40px above sub-boxes -->
+    <path d="M 435 435 H 465 V 700 H 780 V 740" stroke="#3B82F6" stroke-width="2" fill="none" stroke-linejoin="round" marker-end="url(#arrow-blue-solid)"/>
+
+    <!-- Outbox to Entity Sync (Cyan) -->
+    <path d="M 560 740 V 645 H 1040 V 630" stroke="#06B6D4" stroke-width="1.5" fill="none" stroke-linejoin="round" marker-end="url(#arrow-cyan)"/>
+    
+    <!-- Health Store to Health Upload (Cyan) -->
+    <path d="M 810 740 V 630" stroke="#06B6D4" stroke-width="1.5" fill="none" marker-end="url(#arrow-cyan)"/>
+    
+    <!-- Projection Hydration (Solid Blue) -->
+    <path d="M 810 630 V 665 H 1010 V 740" stroke="#3B82F6" stroke-width="2" fill="none" stroke-linejoin="round" marker-end="url(#arrow-blue-solid)"/>
+
+    <!-- Connect Native to BLE (Horizontal) -->
+    <path d="M 450 500 H 480" stroke="#06B6D4" stroke-width="1.5" fill="none" marker-end="url(#arrow-cyan)"/>
+    <path d="M 450 515 H 480" stroke="#06B6D4" stroke-width="1.5" fill="none" marker-start="url(#arrow-cyan)"/>
+    
+    <!-- Ingress Arrows -->
+    <path d="M 170 320 H 230" stroke="#06B6D4" stroke-width="1.5" fill="none" marker-end="url(#arrow-cyan)"/>
+    <path d="M 170 335 H 230" stroke="#06B6D4" stroke-width="1.5" fill="none" marker-start="url(#arrow-cyan)"/>
+    <path d="M 170 510 H 230" stroke="#06B6D4" stroke-width="1.5" fill="none" marker-end="url(#arrow-cyan)"/>
+  </g>
+
+  <!-- Small text labels near vertical bus lines, positioned in clear transit space -->
+  <text x="472" y="678" fill="#6EE7B7" font-size="9" font-weight="600">Atomic Insert &amp; Cursor CAS</text>
+  <text x="835" y="678" fill="#93C5FD" font-size="9" font-weight="600">Atomic Outbox Write</text>
+
+
+  <!-- ========================================================================= -->
+  <!-- 9. RELIABILITY RAIL (RIGHT INSIDE) -->
+  <!-- ========================================================================= -->
+  <g id="reliability-rail">
+    <!-- Subdued container so data lines threading gaps remain clearly visible -->
+    <rect x="1170" y="150" width="220" height="840" rx="10" fill="url(#grad-rail)" fill-opacity="0.35" stroke="#92400E" stroke-width="1" stroke-opacity="0.25"/>
+    <text x="1185" y="185" fill="#FCD34D" font-size="14" font-weight="700">Runtime &amp; Reliability</text>
+    <text x="1185" y="200" fill="#B45309" font-size="11" font-weight="600">Cross-Cutting Constraints</text>
+
+    <rect x="1185" y="220" width="190" height="40" rx="6" fill="#292111" stroke="#92400E" stroke-opacity="0.6"/>
+    <text x="1195" y="238" fill="#FEF3C7" font-size="12" font-weight="600">Reinstall-Safe Wipe</text>
+    <text x="1195" y="252" fill="#FDE68A" font-size="11">Keychain factory reset bounds</text>
+
+    <rect x="1185" y="275" width="190" height="40" rx="6" fill="#292111" stroke="#92400E" stroke-opacity="0.6"/>
+    <text x="1195" y="293" fill="#FEF3C7" font-size="12" font-weight="600">Startup Gates / Phased Init</text>
+    <text x="1195" y="307" fill="#FDE68A" font-size="11">Delays sync until essential DB ready</text>
+
+    <rect x="1185" y="330" width="190" height="40" rx="6" fill="#292111" stroke="#92400E" stroke-opacity="0.6"/>
+    <text x="1195" y="348" fill="#FEF3C7" font-size="12" font-weight="600">Global Mutex / Leases</text>
+    <text x="1195" y="362" fill="#FDE68A" font-size="11">Prevents multiple active sync instances</text>
+
+    <rect x="1185" y="385" width="190" height="40" rx="6" fill="#292111" stroke="#92400E" stroke-opacity="0.6"/>
+    <text x="1195" y="403" fill="#FEF3C7" font-size="12" font-weight="600">Exponential Backoff</text>
+    <text x="1195" y="417" fill="#FDE68A" font-size="11">Handles 429s and network flakiness</text>
+
+    <rect x="1185" y="440" width="190" height="40" rx="6" fill="#292111" stroke="#92400E" stroke-opacity="0.6"/>
+    <text x="1195" y="458" fill="#FEF3C7" font-size="12" font-weight="600">Integrity Gate / Deferred</text>
+    <text x="1195" y="472" fill="#FDE68A" font-size="11">Fails fast on orphaned FKs post-sync</text>
+
+    <rect x="1185" y="495" width="190" height="40" rx="6" fill="#292111" stroke="#92400E" stroke-opacity="0.6"/>
+    <text x="1195" y="513" fill="#FEF3C7" font-size="12" font-weight="600">Dead Letter Recovery</text>
+    <text x="1195" y="527" fill="#FDE68A" font-size="11">Quarantines un-syncable corrupt data</text>
+
+    <rect x="1185" y="550" width="190" height="40" rx="6" fill="#292111" stroke="#92400E" stroke-opacity="0.6"/>
+    <text x="1195" y="568" fill="#FEF3C7" font-size="12" font-weight="600">Event Buffering</text>
+    <text x="1195" y="582" fill="#FDE68A" font-size="11">Protects native events during JS sleep</text>
+
+    <rect x="1185" y="605" width="190" height="40" rx="6" fill="#292111" stroke="#92400E" stroke-opacity="0.6"/>
+    <text x="1195" y="623" fill="#FEF3C7" font-size="12" font-weight="600">Time Budgets &amp; Cancel</text>
+    <text x="1195" y="637" fill="#FDE68A" font-size="11">Aborts native queries to save background</text>
+  </g>
+
+
+  <!-- ========================================================================= -->
+  <!-- 10. EXTERNAL BACKEND BOUNDARY (RIGHT) & HANDOFFS -->
+  <!-- ========================================================================= -->
+  <g id="backend-rail">
+    <!-- Slimmer, desaturated box -->
+    <rect x="1440" y="130" width="200" height="880" rx="12" fill="url(#grad-backend)" stroke="#0284C7" stroke-width="1.5" stroke-opacity="0.6" filter="url(#shadow-md)"/>
+    <text x="1460" y="165" fill="#38BDF8" font-size="15" font-weight="700">Backend Boundary</text>
+    <text x="1460" y="180" fill="#0284C7" font-size="11" font-weight="600">Remote Truth &amp; Services</text>
+
+    <rect x="1455" y="210" width="170" height="50" rx="6" fill="#0C1A2A" stroke="#0369A1" stroke-opacity="0.8"/>
+    <text x="1465" y="230" fill="#F8FAFC" font-size="12" font-weight="700">Realtime / WebSocket</text>
+    <text x="1465" y="246" fill="#94A3B8" font-size="11">Push Events, Invalidations</text>
+
+    <rect x="1455" y="480" width="170" height="60" rx="6" fill="#0C1A2A" stroke="#0369A1" stroke-opacity="0.8"/>
+    <text x="1465" y="502" fill="#F8FAFC" font-size="12" font-weight="700">Entity Sync API</text>
+    <text x="1465" y="518" fill="#94A3B8" font-size="11">/sync/push</text>
+    <text x="1465" y="532" fill="#94A3B8" font-size="11">/sync/changes</text>
+
+    <rect x="1455" y="560" width="170" height="60" rx="6" fill="#0C1A2A" stroke="#0369A1" stroke-opacity="0.8"/>
+    <text x="1465" y="582" fill="#F8FAFC" font-size="12" font-weight="700">Health Upload API</text>
+    <text x="1465" y="598" fill="#94A3B8" font-size="11">/health/samples/batch</text>
+    <text x="1465" y="612" fill="#94A3B8" font-size="11">/health/deletions</text>
+
+    <rect x="1455" y="640" width="170" height="60" rx="6" fill="#0C1A2A" stroke="#0369A1" stroke-opacity="0.8"/>
+    <text x="1465" y="662" fill="#F8FAFC" font-size="12" font-weight="700">Projections API</text>
+    <text x="1465" y="678" fill="#94A3B8" font-size="11">/health/rollups</text>
+    <text x="1465" y="692" fill="#94A3B8" font-size="11">/health/insights</text>
+
+    <rect x="1455" y="720" width="170" height="50" rx="6" fill="#0C1A2A" stroke="#0369A1" stroke-opacity="0.8"/>
+    <text x="1465" y="742" fill="#F8FAFC" font-size="12" font-weight="700">Auth &amp; Config</text>
+    <text x="1465" y="758" fill="#94A3B8" font-size="11">JWT Refresh, Flags</text>
+
+    <!-- Backend Connections Threading Perfectly Through The Reliability Gaps -->
+    
+    <!-- Websocket to Trigger Bus (Orthogonal: exit left, up through gap, left above frame, down to pill bottom) -->
+    <path d="M 1455 235 H 1415 V 92 H 870 V 58"
+      stroke="#A78BFA"
+      stroke-width="1.5"
+      stroke-dasharray="4 3"
+      fill="none"
+      stroke-linejoin="round"
+      marker-end="url(#arrow-violet)"/>
+    
+    <!-- Entity Sync -> Backend (corridor gap x=1155 → below rail at y=648 → rail-backend gap x=1415 → up to API) -->
+    <path d="M 1140 520 H 1155 V 648 H 1415 V 510 H 1455" stroke="#06B6D4" stroke-width="1.5" fill="none" stroke-linejoin="round" marker-end="url(#arrow-cyan)"/>
+    <!-- Backend -> Entity Sync (rail-backend gap x=1425 → below rail at y=656 → corridor gap x=1150 → up to corridor) -->
+    <path d="M 1455 510 H 1425 V 656 H 1150 V 487 H 1140" stroke="#06B6D4" stroke-width="1.5" fill="none" stroke-linejoin="round" marker-end="url(#arrow-cyan)"/>
+    
+    <!-- Health Upload -> Backend (below corridors at y=650, through rail-backend gap at x=1420) -->
+    <path d="M 900 513 H 907 V 650 H 1420 V 590 H 1455" stroke="#06B6D4" stroke-width="1.5" fill="none" stroke-linejoin="round" marker-end="url(#arrow-cyan)"/>
+
+    <!-- Backend Projections -> Health Corridor (exit into rail-backend gap at x=1420, cross below rail boxes at y=660) -->
+    <path d="M 1455 670 H 1420 V 660 H 913 V 558 H 900" stroke="#06B6D4" stroke-width="1.5" fill="none" stroke-linejoin="round" marker-end="url(#arrow-cyan)"/>
+  </g>
+
+</svg>

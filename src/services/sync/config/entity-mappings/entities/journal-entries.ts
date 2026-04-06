@@ -1,0 +1,46 @@
+import type { EntityColumnConfig } from '../types';
+import {
+  toBooleanInt,
+  toJsonArray,
+  toJsonObject,
+} from '../transforms';
+export const JOURNAL_ENTRIES_CONFIG: EntityColumnConfig = {
+  baseColumns: {
+    hasServerId: false,
+    hasData: false,
+    createdAtColumn: 'created_at',
+    updatedAtColumn: 'updated_at',
+  },
+  requiredColumns: [
+    { backendField: 'userId', sqliteColumn: 'user_id' },
+    { backendField: 'clientEntryId', sqliteColumn: 'client_entry_id' },
+    { backendField: 'title', sqliteColumn: 'title' },
+    { backendField: 'content', sqliteColumn: 'content' },
+    { backendField: 'mood', sqliteColumn: 'mood' },
+    { backendField: 'overallMood', sqliteColumn: 'overall_mood' },
+    { backendField: 'entryDate', sqliteColumn: 'entry_date' },
+    { backendField: 'entryType', sqliteColumn: 'entry_type' },
+    { backendField: 'energyLevel', sqliteColumn: 'energy_level' },
+    { backendField: 'focusLevel', sqliteColumn: 'focus_level' },
+    { backendField: 'creativityLevel', sqliteColumn: 'creativity_level' },
+    { backendField: 'socialComfort', sqliteColumn: 'social_comfort' },
+    { backendField: 'sleepQuality', sqliteColumn: 'sleep_quality' },
+    { backendField: 'appetiteLevel', sqliteColumn: 'appetite_level' },
+    { backendField: 'symptomsBefore', sqliteColumn: 'symptoms_before', transform: toJsonArray },
+    { backendField: 'symptomsAfter', sqliteColumn: 'symptoms_after', transform: toJsonArray },
+    { backendField: 'painAreas', sqliteColumn: 'pain_areas', transform: toJsonArray },
+    { backendField: 'photoUrls', sqliteColumn: 'photo_urls', transform: toJsonArray },
+    { backendField: 'voiceMemoUrl', sqliteColumn: 'voice_memo_url' },
+    { backendField: 'weather', sqliteColumn: 'weather', transform: toJsonObject },
+    { backendField: 'tags', sqliteColumn: 'tags', transform: toJsonArray },
+    { backendField: 'isPrivate', sqliteColumn: 'is_private', transform: toBooleanInt },
+    { backendField: 'reactions', sqliteColumn: 'reactions', transform: toJsonObject },
+    { backendField: 'productId', sqliteColumn: 'product_id' },
+    { backendField: 'sessionId', sqliteColumn: 'session_id' },
+    { backendField: 'consumptionId', sqliteColumn: 'consumption_id' },
+    { backendField: 'version', sqliteColumn: 'version' },
+  ],
+  syncMode: 'SYNCED',
+  clientIdBackendField: 'clientEntryId',
+};
+export const JOURNAL_ENTRIES_USER_COLUMN = 'user_id';

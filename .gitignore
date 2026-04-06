@@ -1,0 +1,35 @@
+# Node / React Native
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Expo / Metro
+.expo/
+.metro-health-check*
+dist/
+
+# iOS
+ios/Pods/
+ios/build/
+*.xcworkspace
+
+# Android
+android/.gradle/
+android/app/build/
+android/build/
+
+# Credentials & Signing (NEVER commit these)
+android/app/google-services.json
+android/app/*.keystore
+ios/AppPlatform/GoogleService-Info.plist
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Editor / OS noise
+.DS_Store
+.idea/
+.vscode/

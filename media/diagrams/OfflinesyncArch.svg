@@ -1,0 +1,353 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1060" viewBox="0 0 1800 1060" role="img" aria-labelledby="title desc">
+  <title id="title">Offline Sync Architecture</title>
+  <desc id="desc">Comprehensive sync architecture showing exact execution sequence via a central control spine, separating timing from data dependencies.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B1220"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <marker id="arrowData" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,1 L10,6 L0,11 Z" fill="#38BDF8"/>
+    </marker>
+    <marker id="arrowControl" markerWidth="14" markerHeight="14" refX="10" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,1 L10,7 L0,13 Z" fill="#F59E0B"/>
+    </marker>
+    <marker id="arrowContext" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,1 L10,6 L0,11 Z" fill="#A78BFA"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <style>
+      .title { font: 700 28px Inter, -apple-system, sans-serif; fill: #F8FAFC; }
+      .subtitle { font: 400 15px Inter, -apple-system, sans-serif; fill: #94A3B8; }
+      .colHeader { font: 700 18px Inter, -apple-system, sans-serif; fill: #E2E8F0; }
+      .cardTitle { font: 700 14px Inter, -apple-system, sans-serif; fill: #F8FAFC; }
+      .cardMeta { font: 400 12px Inter, -apple-system, sans-serif; fill: #CBD5E1; }
+      .legendTitle { font: 700 14px Inter, -apple-system, sans-serif; fill: #E2E8F0; }
+      .legendText { font: 500 13px Inter, -apple-system, sans-serif; fill: #94A3B8; }
+      .pathLabel { font: 700 12px Inter, -apple-system, sans-serif; fill: #1E293B; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1800" height="1060" rx="24" fill="url(#bg)"/>
+  <rect x="32" y="32" width="1736" height="996" rx="20" fill="none" stroke="#1E293B"/>
+
+  <!-- Titles -->
+  <text x="64" y="80" class="title">Offline Sync Architecture · Exact Execution Flow &amp; Durable State</text>
+  <text x="64" y="106" class="subtitle">Radically clarified: A numbered, central execution spine explicitly defines timing, while data repositories are isolated to the right.</text>
+
+  <!-- Legend -->
+  <rect x="1460" y="46" width="280" height="96" rx="12" fill="rgba(15, 23, 42, 0.8)" stroke="#334155"/>
+  <text x="1480" y="70" class="legendTitle">Arrow Reference Guide</text>
+  
+  <path d="M 1480 90 L 1520 90" stroke="#F59E0B" stroke-width="4" fill="none" marker-end="url(#arrowControl)"/>
+  <text x="1535" y="94" class="legendText">Exact Execution Sequence</text>
+  
+  <path d="M 1480 115 L 1520 115" stroke="#38BDF8" stroke-width="2" fill="none" marker-end="url(#arrowData)"/>
+  <text x="1535" y="119" class="legendText">Data Read / Write</text>
+
+  <!-- Preflight Banner -->
+  <g filter="url(#shadow)">
+    <rect x="64" y="140" width="260" height="80" rx="12" fill="#450A0A" stroke="#EF4444"/>
+  </g>
+  <rect x="74" y="150" width="4" height="60" rx="2" fill="#EF4444"/>
+  <text x="88" y="164" class="cardTitle">Reinstall Recovery</text>
+  <text x="88" y="184" class="cardMeta">Native pre-JS wipe of Keychain,</text>
+  <text x="88" y="204" class="cardMeta">SQLite, and AsyncStorage.</text>
+  <path d="M 194 220 L 194 250" stroke="#EF4444" stroke-width="2" fill="none" marker-end="url(#arrowData)"/>
+  <text x="204" y="240" class="cardMeta" fill="#EF4444">Empty Local DB</text>
+
+  <!-- Columns (Moved down to Y=260 to guarantee text clearance) -->
+  <rect x="64" y="260" width="240" height="740" rx="16" fill="rgba(30, 41, 59, 0.4)" stroke="#334155"/>
+  <text x="84" y="296" class="colHeader">1. Entry Conditions</text>
+
+  <rect x="340" y="260" width="240" height="740" rx="16" fill="rgba(30, 58, 138, 0.15)" stroke="#1D4ED8"/>
+  <text x="360" y="296" class="colHeader">2. Facade &amp; Policy</text>
+
+  <rect x="620" y="260" width="220" height="740" rx="16" fill="rgba(180, 83, 9, 0.15)" stroke="#D97706"/>
+  <text x="640" y="296" class="colHeader">3. Coordinator</text>
+
+  <rect x="940" y="260" width="280" height="740" rx="16" fill="rgba(76, 29, 149, 0.15)" stroke="#7C3AED"/>
+  <text x="960" y="296" class="colHeader">4. Execution Engines</text>
+
+  <rect x="1260" y="260" width="240" height="740" rx="16" fill="rgba(17, 94, 89, 0.15)" stroke="#0F766E"/>
+  <text x="1280" y="296" class="colHeader">5. Context &amp; Persist</text>
+
+  <rect x="1540" y="260" width="200" height="740" rx="16" fill="rgba(15, 23, 42, 0.4)" stroke="#475569"/>
+  <text x="1560" y="296" class="colHeader">6. External I/O</text>
+
+  <!-- PullEngine Execution Scope Box -->
+  <rect x="950" y="420" width="260" height="220" rx="12" fill="rgba(15, 23, 42, 0.5)" stroke="#8B5CF6" stroke-dasharray="4,4"/>
+  <text x="960" y="445" class="cardMeta" fill="#C4B5FD">Pull Iteration Scope</text>
+
+  <!-- ========================================== -->
+  <!--               ARROW ROUTING                -->
+  <!-- ========================================== -->
+
+  <!-- 1. Triggers Fan-in to Facade -->
+  <path d="M 284 370 L 310 370 L 310 560 L 360 560" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrowData)"/>
+  <path d="M 284 470 L 310 470 L 310 565 L 360 565" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrowData)"/>
+  <path d="M 284 570 L 360 570" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrowData)"/>
+  <path d="M 284 670 L 310 670 L 310 575 L 360 575" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrowData)"/>
+  <path d="M 284 770 L 310 770 L 310 580 L 360 580" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrowData)"/>
+
+  <!-- 2. Facade to Coordinator -->
+  <path d="M 560 570 L 630 570" stroke="#F59E0B" stroke-width="4" fill="none" marker-end="url(#arrowControl)"/>
+  
+  <!-- Sidecars to Facade -->
+  <path d="M 460 660 L 460 600" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrowData)"/>
+  <path d="M 460 760 L 460 720" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrowData)"/>
+
+  <!-- 3. CENTRAL EXECUTION SPINE (Thick Gold) -->
+  <path d="M 830 570 L 890 570" stroke="#F59E0B" stroke-width="4" fill="none" />
+  <path d="M 890 370 L 890 890" stroke="#F59E0B" stroke-width="4" fill="none" />
+  
+  <!-- Branch arrows (labels rendered after cards for z-order) -->
+  <path d="M 890 370 L 960 370" stroke="#F59E0B" stroke-width="4" fill="none" marker-end="url(#arrowControl)"/>
+  <path d="M 890 480 L 960 480" stroke="#F59E0B" stroke-width="4" fill="none" marker-end="url(#arrowControl)"/>
+  <path d="M 1080 510 L 1080 550" stroke="#F59E0B" stroke-width="4" fill="none" marker-end="url(#arrowControl)"/>
+  <path d="M 890 770 L 960 770" stroke="#F59E0B" stroke-width="4" fill="none" marker-end="url(#arrowControl)"/>
+  <path d="M 890 890 L 960 890" stroke="#F59E0B" stroke-width="4" fill="none" marker-end="url(#arrowControl)"/>
+
+
+  <!-- 4. DATA I/O ROUTES (Thin Blue) -->
+  <!-- Push -> Outbox -->
+  <path d="M 1200 370 L 1280 370" stroke="#38BDF8" stroke-width="2" fill="none" marker-end="url(#arrowData)"/> 
+  <!-- Push -> Tombstone -->
+  <path d="M 1200 370 L 1230 370 L 1230 470 L 1280 470" stroke="#38BDF8" stroke-width="2" fill="none" marker-end="url(#arrowData)"/> 
+  <!-- Push -> API (Routed safely above Outbox) -->
+  <path d="M 1200 370 L 1240 370 L 1240 320 L 1520 320 L 1520 370 L 1560 370" stroke="#38BDF8" stroke-width="2" fill="none" marker-end="url(#arrowData)"/> 
+  
+  <!-- Pull -> API (Routed safely between Tombstone and Context) -->
+  <path d="M 1200 480 L 1230 480 L 1230 520 L 1520 520 L 1520 380 L 1560 380" stroke="#38BDF8" stroke-width="2" fill="none" marker-end="url(#arrowData)"/> 
+  
+  <!-- Apply -> Local Repos -->
+  <path d="M 1200 580 L 1240 580 L 1240 670 L 1280 670" stroke="#38BDF8" stroke-width="2" fill="none" marker-end="url(#arrowData)"/> 
+  <!-- Apply -> IdMap -->
+  <path d="M 1200 580 L 1230 580 L 1230 770 L 1280 770" stroke="#38BDF8" stroke-width="2" fill="none" marker-end="url(#arrowData)"/> 
+  <!-- Apply -> Registry -->
+  <path d="M 1080 610 L 1080 660" stroke="#38BDF8" stroke-width="2" fill="none" marker-end="url(#arrowData)"/> 
+
+  <!-- Commit -> Cursor Repo -->
+  <path d="M 1200 890 L 1280 890" stroke="#38BDF8" stroke-width="2" fill="none" marker-end="url(#arrowData)"/> 
+
+  <!-- 5. CONTEXT & SCOPE ROUTES (Dotted Purple) -->
+  <!-- Push writes Context -->
+  <path d="M 1200 370 L 1250 370 L 1250 560 L 1280 560" stroke="#A78BFA" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-end="url(#arrowContext)"/> 
+  <!-- Apply writes Context -->
+  <path d="M 1200 580 L 1280 580" stroke="#A78BFA" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-end="url(#arrowContext)"/> 
+  <!-- Integrity reads Context -->
+  <path d="M 1280 590 L 1260 590 L 1260 770 L 1200 770" stroke="#A78BFA" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-end="url(#arrowContext)"/> 
+  <!-- Integrity reads Contracts (Routed safely below IdMap) -->
+  <path d="M 1200 770 L 1240 770 L 1240 830 L 1520 830 L 1520 770 L 1560 770" stroke="#A78BFA" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-end="url(#arrowContext)"/> 
+
+  <!-- ========================================== -->
+  <!--                  NODES                     -->
+  <!-- ========================================== -->
+
+  <!-- Col 1: Entry Conditions -->
+  <g filter="url(#shadow)">
+    <rect x="84" y="340" width="200" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="94" y="350" width="4" height="40" rx="2" fill="#3B82F6"/>
+  <text x="108" y="364" class="cardTitle">App Launch (Cached)</text>
+  <text x="108" y="384" class="cardMeta">Background init sync</text>
+
+  <g filter="url(#shadow)">
+    <rect x="84" y="440" width="200" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="94" y="450" width="4" height="40" rx="2" fill="#3B82F6"/>
+  <text x="108" y="464" class="cardTitle">Fresh Login</text>
+  <text x="108" y="484" class="cardMeta">Explicit post-auth sync</text>
+
+  <g filter="url(#shadow)">
+    <rect x="84" y="540" width="200" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="94" y="550" width="4" height="40" rx="2" fill="#3B82F6"/>
+  <text x="108" y="564" class="cardTitle">Network Reconnect</text>
+  <text x="108" y="584" class="cardMeta">Trigger on return online</text>
+
+  <g filter="url(#shadow)">
+    <rect x="84" y="640" width="200" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="94" y="650" width="4" height="40" rx="2" fill="#3B82F6"/>
+  <text x="108" y="664" class="cardTitle">App Foreground</text>
+  <text x="108" y="684" class="cardMeta">Trigger on app active</text>
+
+  <g filter="url(#shadow)">
+    <rect x="84" y="740" width="200" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="94" y="750" width="4" height="40" rx="2" fill="#10B981"/>
+  <text x="108" y="764" class="cardTitle">Local Mutation Event</text>
+  <text x="108" y="784" class="cardMeta">Data changed locally</text>
+
+  <!-- Col 2: Facade -->
+  <g filter="url(#shadow)">
+    <rect x="360" y="540" width="200" height="60" rx="12" fill="#1E3A8A" stroke="#3B82F6"/>
+  </g>
+  <rect x="370" y="550" width="4" height="40" rx="2" fill="#93C5FD"/>
+  <text x="384" y="564" class="cardTitle">DataSyncService</text>
+  <text x="384" y="584" class="cardMeta">Debounce, backoff, invalidate</text>
+
+  <g filter="url(#shadow)">
+    <rect x="360" y="660" width="200" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="370" y="670" width="4" height="40" rx="2" fill="#A78BFA"/>
+  <text x="384" y="684" class="cardTitle">SyncScheduler (Sidecar)</text>
+  <text x="384" y="704" class="cardMeta">Task limits, SQLite budgets</text>
+
+  <g filter="url(#shadow)">
+    <rect x="360" y="760" width="200" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="370" y="770" width="4" height="40" rx="2" fill="#F59E0B"/>
+  <text x="384" y="784" class="cardTitle">SyncLeaseManager</text>
+  <text x="384" y="804" class="cardMeta">Optional admission control</text>
+
+  <!-- Col 3: Coordinator -->
+  <g filter="url(#shadow)">
+    <rect x="640" y="540" width="200" height="60" rx="12" fill="#78350F" stroke="#F59E0B"/>
+  </g>
+  <rect x="650" y="550" width="4" height="40" rx="2" fill="#FDE68A"/>
+  <text x="664" y="564" class="cardTitle">SyncCoordinator</text>
+  <text x="664" y="584" class="cardMeta">Global orchestrator</text>
+
+  <!-- Col 4: Execution Engines -->
+  <g filter="url(#shadow)">
+    <rect x="960" y="340" width="240" height="60" rx="12" fill="#0F172A" stroke="#64748B"/>
+  </g>
+  <rect x="970" y="350" width="4" height="40" rx="2" fill="#A78BFA"/>
+  <text x="984" y="364" class="cardTitle">PushEngine</text>
+  <text x="984" y="384" class="cardMeta">Dequeue, FK resolve, push</text>
+
+  <g filter="url(#shadow)">
+    <rect x="960" y="450" width="240" height="60" rx="12" fill="#0F172A" stroke="#64748B"/>
+  </g>
+  <rect x="970" y="460" width="4" height="40" rx="2" fill="#3B82F6"/>
+  <text x="984" y="474" class="cardTitle">PullEngine (Fetch)</text>
+  <text x="984" y="494" class="cardMeta">Composite cursor, paging loop</text>
+
+  <g filter="url(#shadow)">
+    <rect x="960" y="550" width="240" height="60" rx="12" fill="#2E1065" stroke="#8B5CF6"/>
+  </g>
+  <rect x="970" y="560" width="4" height="40" rx="2" fill="#C4B5FD"/>
+  <text x="984" y="574" class="cardTitle">ApplyEngine (Nested)</text>
+  <text x="984" y="594" class="cardMeta">Apply handler logic, DB mutate</text>
+
+  <g filter="url(#shadow)">
+    <rect x="960" y="660" width="240" height="60" rx="12" fill="#0F172A" stroke="#64748B"/>
+  </g>
+  <rect x="970" y="670" width="4" height="40" rx="2" fill="#A78BFA"/>
+  <text x="984" y="684" class="cardTitle">FrontendSyncHandlerRegistry</text>
+  <text x="984" y="704" class="cardMeta">GenericSyncHandler dispatch</text>
+
+  <g filter="url(#shadow)">
+    <rect x="960" y="740" width="240" height="60" rx="12" fill="#451A03" stroke="#F59E0B"/>
+  </g>
+  <rect x="970" y="750" width="4" height="40" rx="2" fill="#FDE68A"/>
+  <text x="984" y="764" class="cardTitle">IntegrityGate</text>
+  <text x="984" y="784" class="cardMeta">Orphan + Stale validation checks</text>
+
+  <g filter="url(#shadow)">
+    <rect x="960" y="860" width="240" height="60" rx="12" fill="#064E3B" stroke="#10B981"/>
+  </g>
+  <rect x="970" y="870" width="4" height="40" rx="2" fill="#34D399"/>
+  <text x="984" y="884" class="cardTitle">Commit Deferred Cursors</text>
+  <text x="984" y="904" class="cardMeta">Advance monotonic cursors safely</text>
+
+
+  <!-- Col 5: Context & Persist -->
+  <g filter="url(#shadow)">
+    <rect x="1280" y="340" width="200" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="1290" y="350" width="4" height="40" rx="2" fill="#22C55E"/>
+  <text x="1304" y="364" class="cardTitle">Outbox Repository</text>
+  <text x="1304" y="384" class="cardMeta">Durable mutation queue</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1280" y="440" width="200" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="1290" y="450" width="4" height="40" rx="2" fill="#10B981"/>
+  <text x="1304" y="464" class="cardTitle">Tombstone Repository</text>
+  <text x="1304" y="484" class="cardMeta">Soft-delete tracking</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1280" y="540" width="200" height="80" rx="12" fill="#115E59" stroke="#10B981"/>
+  </g>
+  <rect x="1290" y="550" width="4" height="60" rx="2" fill="#A7F3D0"/>
+  <text x="1304" y="564" class="cardTitle">SyncBatchContext</text>
+  <text x="1304" y="584" class="cardMeta">Bridge object tracking:</text>
+  <text x="1304" y="604" class="cardMeta">Touched IDs &amp; Deferrals</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1280" y="640" width="200" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="1290" y="650" width="4" height="40" rx="2" fill="#64748B"/>
+  <text x="1304" y="664" class="cardTitle">Local Entity Repositories</text>
+  <text x="1304" y="684" class="cardMeta">Domain data tables</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1280" y="740" width="200" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="1290" y="750" width="4" height="40" rx="2" fill="#A78BFA"/>
+  <text x="1304" y="764" class="cardTitle">IdMapRepository</text>
+  <text x="1304" y="784" class="cardMeta">Identity mappings</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1280" y="860" width="200" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="1290" y="870" width="4" height="40" rx="2" fill="#3B82F6"/>
+  <text x="1304" y="884" class="cardTitle">Cursor Repository</text>
+  <text x="1304" y="904" class="cardMeta">Per-entity persistent state</text>
+
+
+  <!-- Col 6: Correctness -->
+  <g filter="url(#shadow)">
+    <rect x="1560" y="340" width="160" height="60" rx="12" fill="#0F172A" stroke="#10B981"/>
+  </g>
+  <rect x="1570" y="350" width="4" height="40" rx="2" fill="#10B981"/>
+  <text x="1584" y="364" class="cardTitle">Backend API</text>
+  <text x="1584" y="384" class="cardMeta">/sync/push, /changes</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1560" y="740" width="160" height="60" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="1570" y="750" width="4" height="40" rx="2" fill="#A78BFA"/>
+  <text x="1584" y="764" class="cardTitle">Shared Contracts</text>
+  <text x="1584" y="784" class="cardMeta">RELATION_GRAPH</text>
+
+  <!-- ========================================== -->
+  <!-- EXECUTION LABELS (rendered last for z-order) -->
+  <!-- ========================================== -->
+
+  <!-- Branch (1): Push — above PushEngine card y=340 -->
+  <rect x="890" y="318" width="24" height="24" rx="12" fill="#F59E0B"/>
+  <text x="902" y="334" class="pathLabel" text-anchor="middle">1</text>
+  <rect x="918" y="308" width="76" height="20" rx="4" fill="#FDE68A"/>
+  <text x="956" y="322" class="pathLabel" text-anchor="middle" font-size="11px">Run Push</text>
+
+  <!-- Branch (2): Pull — in gap between Push y=400 and Pull y=450 -->
+  <rect x="890" y="428" width="24" height="24" rx="12" fill="#F59E0B"/>
+  <text x="902" y="444" class="pathLabel" text-anchor="middle">2</text>
+  <rect x="918" y="418" width="70" height="20" rx="4" fill="#FDE68A"/>
+  <text x="953" y="432" class="pathLabel" text-anchor="middle" font-size="11px">Run Pull</text>
+
+  <!-- Branch (2a): Apply — in gap between Pull y=510 and Apply y=550 -->
+  <rect x="1068" y="515" width="24" height="24" rx="12" fill="#F59E0B"/>
+  <text x="1080" y="531" class="pathLabel" text-anchor="middle">2a</text>
+
+  <!-- Branch (3): Validate — in gap between Registry y=720 and IntegrityGate y=740 -->
+  <rect x="890" y="722" width="24" height="24" rx="12" fill="#F59E0B"/>
+  <text x="902" y="738" class="pathLabel" text-anchor="middle">3</text>
+  <rect x="918" y="712" width="70" height="20" rx="4" fill="#FDE68A"/>
+  <text x="953" y="726" class="pathLabel" text-anchor="middle" font-size="11px">Validate</text>
+
+  <!-- Branch (4): Commit — in gap between IntegrityGate y=800 and Commit y=860 -->
+  <rect x="890" y="838" width="24" height="24" rx="12" fill="#F59E0B"/>
+  <text x="902" y="854" class="pathLabel" text-anchor="middle">4</text>
+  <rect x="918" y="828" width="90" height="20" rx="4" fill="#FDE68A"/>
+  <text x="963" y="842" class="pathLabel" text-anchor="middle" font-size="11px">Commit if OK</text>
+
+</svg>

@@ -1,0 +1,216 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1100" viewBox="0 0 1200 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Push Conflict Resolution Outcomes · Deterministic Merge and Outbox Actions</title>
+  <desc id="desc">Accurate two-stage conflict resolution flow: generic handler computes the semantic outcome, and PushEngine executes the queue-state transition.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B1220"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="slateGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="violetGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2E1065"/>
+      <stop offset="100%" stop-color="#4C1D95"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,1 L12,7 L0,13 Z" fill="#94A3B8"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,1 L12,7 L0,13 Z" fill="#EF4444"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,1 L12,7 L0,13 Z" fill="#22C55E"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <style>
+      .title { font: 700 28px Inter, -apple-system, sans-serif; fill: #F8FAFC; }
+      .subtitle { font: 400 15px Inter, -apple-system, sans-serif; fill: #94A3B8; }
+      .colHeader { font: 700 18px Inter, -apple-system, sans-serif; fill: #E2E8F0; }
+      .colDesc { font: 400 13px Inter, -apple-system, sans-serif; fill: #94A3B8; }
+      .cardTitle { font: 700 14px Inter, -apple-system, sans-serif; fill: #F8FAFC; }
+      .cardMeta { font: 400 12px Inter, -apple-system, sans-serif; fill: #CBD5E1; }
+      .diamondText { font: 600 13px Inter, -apple-system, sans-serif; fill: #F8FAFC; text-anchor: middle; }
+      .outcome { font: 700 14px Inter, -apple-system, sans-serif; fill: #0F172A; }
+      .branchLabelYes { font: 600 12px Inter, -apple-system, sans-serif; fill: #22C55E; }
+      .branchLabelNo { font: 600 12px Inter, -apple-system, sans-serif; fill: #EF4444; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="1100" rx="24" fill="url(#bg)"/>
+  <rect x="32" y="32" width="1136" height="1036" rx="20" fill="none" stroke="#1E293B"/>
+  
+  <text x="64" y="80" class="title">Push Conflict Resolution Outcomes</text>
+  <text x="64" y="106" class="subtitle">Two-stage contract: GenericSyncHandler computes deterministic outcome using shared policies, PushEngine executes outbox transition.</text>
+
+  <!-- Columns Backgrounds -->
+  <rect x="64" y="150" width="280" height="880" rx="16" fill="rgba(30, 41, 59, 0.3)" stroke="#334155"/>
+  <text x="84" y="186" class="colHeader">1. Conflict Input</text>
+
+  <rect x="360" y="150" width="460" height="880" rx="16" fill="rgba(76, 29, 149, 0.15)" stroke="#6D28D9"/>
+  <text x="380" y="186" class="colHeader">2. Resolution Computation</text>
+  <text x="380" y="206" class="colDesc">GenericSyncHandler.handleConflictV2</text>
+
+  <rect x="836" y="150" width="300" height="880" rx="16" fill="rgba(29, 78, 216, 0.15)" stroke="#2563EB"/>
+  <text x="856" y="186" class="colHeader">3. PushEngine Transitions</text>
+  <text x="856" y="206" class="colDesc">Execution of outbox queue actions</text>
+
+  <!-- Flow Lines: Col 1 to Col 2 -->
+  <path d="M 204 310 L 204 340 C 204 360 480 360 480 380 L 480 390" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  
+  <!-- Flow Lines: Col 2 Vertical Spine -->
+  <path d="M 480 450 L 480 490" stroke="#22C55E" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+  <path d="M 480 550 L 480 590" stroke="#22C55E" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+  <path d="M 480 650 L 480 690" stroke="#EF4444" stroke-width="2" fill="none" marker-end="url(#arrowRed)"/>
+  
+  <path d="M 480 750 L 400 780 L 400 810" stroke="#EF4444" stroke-width="2" fill="none" marker-end="url(#arrowRed)"/>
+  <path d="M 480 750 L 560 780 L 560 810" stroke="#22C55E" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+  
+  <path d="M 400 870 L 400 900 C 400 915 480 915 480 930 L 480 940" stroke="#94A3B8" stroke-width="2" fill="none" />
+  <path d="M 560 870 L 560 900 C 560 915 480 915 480 930 L 480 940" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Horizontal Branches to Outcomes -->
+  <path d="M 570 420 L 640 420" stroke="#EF4444" stroke-width="2" fill="none" marker-end="url(#arrowRed)"/>
+  <path d="M 570 520 L 640 520" stroke="#EF4444" stroke-width="2" fill="none" marker-end="url(#arrowRed)"/>
+  <path d="M 580 620 L 640 620" stroke="#22C55E" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+  <path d="M 410 970 L 370 970 L 370 1000" stroke="#EF4444" stroke-width="2" fill="none" marker-end="url(#arrowRed)"/>
+  <path d="M 550 970 L 690 970 L 690 1000" stroke="#22C55E" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+
+  <!-- Col 2 Outcomes to Col 3 Actions (Dotted logical handoff) -->
+  <path d="M 760 420 L 850 420 L 850 440 L 880 440" stroke="#94A3B8" stroke-width="2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+  <path d="M 760 520 L 850 520 L 850 480 L 880 480" stroke="#94A3B8" stroke-width="2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+  
+  <path d="M 780 620 L 880 620" stroke="#94A3B8" stroke-width="2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+  
+  <path d="M 450 1030 L 450 1070 C 450 1090 850 1090 850 990 L 880 990" stroke="#94A3B8" stroke-width="2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+  <path d="M 760 1030 L 850 1030 L 850 860 L 880 860" stroke="#94A3B8" stroke-width="2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+
+  <!-- Col 1: Input Nodes -->
+  <g filter="url(#shadow)">
+    <rect x="84" y="240" width="240" height="70" rx="12" fill="#0F172A" stroke="#475569"/>
+  </g>
+  <rect x="96" y="250" width="4" height="50" rx="2" fill="#F59E0B"/>
+  <text x="110" y="270" class="cardTitle">Backend Conflict Item</text>
+  <text x="110" y="290" class="cardMeta">Server response for pushed outbox row</text>
+
+  <g filter="url(#shadow)">
+    <rect x="124" y="340" width="200" height="50" rx="12" fill="#1E293B" stroke="#64748B"/>
+  </g>
+  <text x="224" y="370" class="diamondText">Load local entity repo</text>
+  <path d="M 204 310 L 204 340" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Col 2: Computation Nodes -->
+  <g filter="url(#shadow)">
+    <polygon points="480,390 570,420 480,450 390,420" fill="#1E293B" stroke="#64748B"/>
+  </g>
+  <text x="480" y="425" class="diamondText">Server data?</text>
+  <text x="490" y="475" class="branchLabelYes">Yes</text>
+  <text x="590" y="415" class="branchLabelNo">No</text>
+
+  <g filter="url(#shadow)">
+    <polygon points="480,490 570,520 480,550 390,520" fill="#1E293B" stroke="#64748B"/>
+  </g>
+  <text x="480" y="525" class="diamondText">Local found?</text>
+  <text x="490" y="575" class="branchLabelYes">Yes</text>
+  <text x="590" y="515" class="branchLabelNo">No</text>
+
+  <g filter="url(#shadow)">
+    <polygon points="480,590 580,620 480,650 380,620" fill="#1E293B" stroke="#64748B"/>
+  </g>
+  <text x="480" y="625" class="diamondText">Conflict-free?</text>
+  <text x="490" y="675" class="branchLabelNo">No</text>
+  <text x="600" y="615" class="branchLabelYes">Yes</text>
+
+  <g filter="url(#shadow)">
+    <polygon points="480,690 590,720 480,750 370,720" fill="#1E293B" stroke="#64748B"/>
+  </g>
+  <text x="480" y="725" class="diamondText">Custom merge?</text>
+  <text x="390" y="770" class="branchLabelNo">No</text>
+  <text x="570" y="770" class="branchLabelYes">Yes</text>
+
+  <!-- Merges -->
+  <g filter="url(#shadow)">
+    <rect x="310" y="810" width="180" height="60" rx="12" fill="#0F172A" stroke="#3B82F6"/>
+  </g>
+  <rect x="320" y="820" width="4" height="40" rx="2" fill="#3B82F6"/>
+  <text x="334" y="834" class="cardTitle">mergeEntity()</text>
+  <text x="334" y="854" class="cardMeta">Config-driven field merge</text>
+
+  <g filter="url(#shadow)">
+    <rect x="464" y="810" width="180" height="60" rx="12" fill="#0F172A" stroke="#8B5CF6"/>
+  </g>
+  <rect x="474" y="820" width="4" height="40" rx="2" fill="#8B5CF6"/>
+  <text x="488" y="834" class="cardTitle">customMerge()</text>
+  <text x="488" y="854" class="cardMeta">Pure function override</text>
+
+  <g filter="url(#shadow)">
+    <polygon points="480,940 550,970 480,1000 410,970" fill="#1E293B" stroke="#64748B"/>
+  </g>
+  <text x="480" y="975" class="diamondText">Valid merge?</text>
+  <text x="370" y="965" class="branchLabelNo">No / Error</text>
+  <text x="570" y="965" class="branchLabelYes">Yes</text>
+
+  <!-- Outcomes -->
+  <g filter="url(#shadow)">
+    <rect x="620" y="1000" width="150" height="60" rx="12" fill="#EFF6FF" stroke="#3B82F6"/>
+  </g>
+  <text x="695" y="1035" text-anchor="middle" class="outcome">REBASE_AND_RETRY</text>
+
+  <g filter="url(#shadow)">
+    <rect x="300" y="1000" width="160" height="60" rx="12" fill="#FEF2F2" stroke="#EF4444"/>
+  </g>
+  <text x="380" y="1035" text-anchor="middle" class="outcome">MANUAL_REQUIRED</text>
+
+  <g filter="url(#shadow)">
+    <rect x="640" y="590" width="140" height="60" rx="12" fill="#F0FDF4" stroke="#22C55E"/>
+  </g>
+  <text x="710" y="625" text-anchor="middle" class="outcome">ADOPT_SERVER</text>
+
+  <g filter="url(#shadow)">
+    <rect x="640" y="390" width="120" height="60" rx="12" fill="#F8FAFC" stroke="#94A3B8"/>
+  </g>
+  <text x="700" y="425" text-anchor="middle" class="outcome">SKIPPED</text>
+
+  <g filter="url(#shadow)">
+    <rect x="640" y="490" width="120" height="60" rx="12" fill="#F8FAFC" stroke="#94A3B8"/>
+  </g>
+  <text x="700" y="525" text-anchor="middle" class="outcome">SKIPPED</text>
+
+  <!-- Col 3: Outbox Actions -->
+  <g filter="url(#shadow)">
+    <rect x="880" y="430" width="220" height="60" rx="12" fill="#1E293B" stroke="#475569"/>
+  </g>
+  <rect x="890" y="440" width="4" height="40" rx="2" fill="#94A3B8"/>
+  <text x="904" y="454" class="cardTitle">Leave for Retry</text>
+  <text x="904" y="474" class="cardMeta">No outbox mutation required</text>
+
+  <g filter="url(#shadow)">
+    <rect x="880" y="590" width="220" height="60" rx="12" fill="#064E3B" stroke="#10B981"/>
+  </g>
+  <rect x="890" y="600" width="4" height="40" rx="2" fill="#10B981"/>
+  <text x="904" y="614" class="cardTitle">Mark COMPLETED</text>
+  <text x="904" y="634" class="cardMeta">Local mutation safely superseded</text>
+
+  <g filter="url(#shadow)">
+    <rect x="880" y="830" width="220" height="60" rx="12" fill="#1E3A8A" stroke="#3B82F6"/>
+  </g>
+  <rect x="890" y="840" width="4" height="40" rx="2" fill="#3B82F6"/>
+  <text x="904" y="854" class="cardTitle">Update Payload &amp; Version</text>
+  <text x="904" y="874" class="cardMeta">Reset to PENDING for next push</text>
+
+  <g filter="url(#shadow)">
+    <rect x="880" y="960" width="220" height="60" rx="12" fill="#450A0A" stroke="#EF4444"/>
+  </g>
+  <rect x="890" y="970" width="4" height="40" rx="2" fill="#EF4444"/>
+  <text x="904" y="984" class="cardTitle">Move to DEAD_LETTER</text>
+  <text x="904" y="1004" class="cardMeta">Quarantined for manual fix</text>
+
+</svg>

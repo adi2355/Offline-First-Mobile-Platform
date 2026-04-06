@@ -1,0 +1,87 @@
+export {
+  SyncCoordinationState,
+  getSyncCoordinationState,
+  type SyncSource,
+} from './SyncCoordinationState';
+export {
+  type SyncRunContext,
+  createSyncRunContext,
+  type ResolvedCommand,
+  type PushSuccessItem,
+  type PushFailedItem,
+  type PushConflictItem,
+  type PushReport,
+  createEmptyPushReport,
+  type PullChangeItem,
+  type EntityCursorMap,
+  type PullReport,
+  createEmptyPullReport,
+  type ApplyChangeResult,
+  type ApplyReport,
+  createEmptyApplyReport,
+  type SyncReport,
+  createFailedSyncReport,
+  type SyncOptions,
+  DEFAULT_SYNC_OPTIONS,
+  type SyncEngineType,
+  type SyncErrorCode,
+  SYNC_ERROR_CODES,
+  SyncEngineError,
+} from './types';
+export {
+  type IPushEngine,
+  type PushEngineStats,
+  type IPullEngine,
+  type PullEngineStats,
+  type IApplyEngine,
+  type ISyncCoordinator,
+  type SyncCoordinatorState,
+  type SyncCoordinatorStatus,
+  type OutboxPort,
+  type TombstonePort,
+  type IdMapPort,
+  type CursorPort,
+  type CursorUpdateStats,
+  type IPushEngineRepositories,
+  type IPullEngineRepositories,
+  type ISyncCoordinatorRepositories,
+} from './interfaces';
+export {
+  orderCommands,
+  collectCreateIds,
+  resolveForeignKeysInPayload,
+  type FkResolutionInput,
+  type FkResolutionOutput,
+  type FkResolutionFieldResult,
+  buildPushRequest,
+  type BuildPushRequestOptions,
+  type PushChangeInput,
+  type PushRequestChange,
+  type PushRequestBody,
+  processPushResponse,
+  type ProcessPushResponseContext,
+  type PushResponseBody,
+  shouldSkipCommand,
+  isSyncableEntityType,
+  groupSuccessfulByEntityType,
+  categorizeFailed,
+} from './PushEngineCore';
+export { PushEngine, type PushEngineDependencies } from './PushEngine';
+export { ApplyEngine, type ApplyEngineDependencies } from './ApplyEngine';
+export { PullEngine, type PullEngineDependencies } from './PullEngine';
+export { SyncCoordinator, type SyncCoordinatorDependencies } from './SyncCoordinator';
+export {
+  createEnginePorts,
+  createPushEnginePorts,
+  createPullEnginePorts,
+  createSyncCoordinatorPorts,
+  type RawRepositories,
+  type AdaptedPorts,
+} from './adapters';
+export {
+  createSyncEngineStack,
+  createTestSyncEngineStack,
+  type SyncEngineStackDependencies,
+  type SyncEngineStack,
+  type TestSyncEngineStackOptions,
+} from './compositionRoot';

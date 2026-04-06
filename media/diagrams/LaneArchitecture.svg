@@ -1,0 +1,273 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="960" viewBox="0 0 1600 960" role="img" aria-labelledby="title-hlth1 desc-hlth1">
+  <title id="title-hlth1">Health Ingestion: Pipeline &amp; Temporal Subsystem</title>
+  <desc id="desc-hlth1">Concurrent, non-sequential ingestion lanes converging on a strict atomic local commit boundary.</desc>
+  <defs>
+    <!-- Backgrounds -->
+    <linearGradient id="bg-hlth1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B1220"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="panelGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    
+    <!-- Lane Gradients -->
+    <linearGradient id="hotTrack" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#450A0A"/>
+      <stop offset="100%" stop-color="#7F1D1D"/>
+    </linearGradient>
+    <linearGradient id="coldTrack" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#082F49"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </linearGradient>
+    <linearGradient id="changeTrack" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2E1065"/>
+      <stop offset="100%" stop-color="#5B21B6"/>
+    </linearGradient>
+    <linearGradient id="commitGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#064E3B"/>
+      <stop offset="100%" stop-color="#022C22"/>
+    </linearGradient>
+
+    <!-- Markers -->
+    <marker id="arrow-solid" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,1 L10,5 L0,9 Z" fill="#94A3B8"/>
+    </marker>
+    <marker id="arrow-solid-teal" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,1 L10,5 L0,9 Z" fill="#2DD4BF"/>
+    </marker>
+    <marker id="arrow-dash-orange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,1 L10,5 L0,9 Z" fill="#F97316"/>
+    </marker>
+    <marker id="arrow-dash-pink" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,1 L10,5 L0,9 Z" fill="#F43F5E"/>
+    </marker>
+    
+    <!-- Shadows -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#2DD4BF" flood-opacity="0.3"/>
+    </filter>
+
+    <style>
+      .title { font: 700 32px Inter, sans-serif; fill: #F8FAFC; }
+      .subtitle { font: 400 16px Inter, sans-serif; fill: #94A3B8; }
+      .groupTitle { font: 700 15px Inter, sans-serif; fill: #CBD5E1; letter-spacing: 0.05em; text-transform: uppercase; }
+      .cardTitle { font: 700 16px Inter, sans-serif; fill: #F8FAFC; }
+      .cardSub { font: 400 14px Inter, sans-serif; fill: #94A3B8; }
+      .codeLabel { font: 600 12px "JetBrains Mono", monospace; fill: #38BDF8; }
+      .cursorPill { font: 700 13px "JetBrains Mono", monospace; fill: #FFFFFF; }
+      .annotation { font: 600 14px Inter, sans-serif; fill: #E2E8F0; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="960" rx="24" fill="url(#bg-hlth1)"/>
+  <rect x="24" y="24" width="1552" height="912" rx="20" fill="none" stroke="#334155" stroke-width="2"/>
+
+  <!-- Header -->
+  <text x="56" y="76" class="title">Health Ingestion: Pipeline &amp; Temporal Subsystem</text>
+  <text x="56" y="104" class="subtitle">Concurrent, non-sequential ingestion lanes converging cleanly on an atomic local commit boundary.</text>
+
+  <!-- ========================================================= -->
+  <!-- COLUMN 1: TRIGGERS (LEFT)                                 -->
+  <!-- ========================================================= -->
+  <text x="56" y="170" class="groupTitle">Trigger Sources</text>
+  
+  <!-- Foreground Orchestration -->
+  <g filter="url(#shadow)">
+    <rect x="56" y="190" width="260" height="120" rx="12" fill="url(#panelGrad)" stroke="#F97316"/>
+    <rect x="56" y="190" width="6" height="120" rx="3" fill="#F97316"/>
+    <text x="76" y="220" class="cardTitle">Foreground Orchestration</text>
+    <text x="76" y="245" class="cardSub">HealthIngestionEngine (TS)</text>
+    <text x="76" y="265" class="cardSub">User-initiated &amp; Fair Scheduling</text>
+    <text x="76" y="285" class="cardSub">Active syncs &amp; maintenance</text>
+  </g>
+
+  <!-- Background Wake -->
+  <g filter="url(#shadow)">
+    <rect x="56" y="380" width="260" height="120" rx="12" fill="url(#panelGrad)" stroke="#F43F5E"/>
+    <rect x="56" y="380" width="6" height="120" rx="3" fill="#F43F5E"/>
+    <text x="76" y="410" class="cardTitle">Background Source Wake</text>
+    <text x="76" y="435" class="cardSub">AppDelegate → Observer</text>
+    <text x="76" y="455" class="cardSub">OS background delivery callback</text>
+    <text x="76" y="475" class="cardSub">Strict execution time budget</text>
+  </g>
+
+  <!-- ========================================================= -->
+  <!-- UPSTREAM SOURCE (TOP CENTER)                              -->
+  <!-- ========================================================= -->
+  <text x="380" y="125" class="groupTitle">Upstream Source</text>
+  <g filter="url(#shadow)">
+    <rect x="380" y="130" width="760" height="50" rx="12" fill="#0F172A" stroke="#475569"/>
+    <text x="760" y="162" text-anchor="middle" class="cardTitle" fill="#FFFFFF">Apple HealthKit Framework</text>
+  </g>
+
+  <!-- Clean Feed into Concurrent Boundary -->
+  <path d="M 760 180 L 760 215" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow-solid)"/>
+
+  <!-- ========================================================= -->
+  <!-- CENTER: CONCURRENT EXECUTION LANES BOUNDARY               -->
+  <!-- ========================================================= -->
+  <text x="380" y="215" class="groupTitle">Native Temporal Execution Lanes </text>
+  
+  <!-- Subtle grouping box to unite the lanes conceptually -->
+  <rect x="360" y="230" width="800" height="440" rx="20" fill="none" stroke="#334155" stroke-dasharray="6 6" stroke-width="2"/>
+
+  <!-- HOT TRACK -->
+  <g filter="url(#shadow)">
+    <rect x="380" y="250" width="760" height="110" rx="16" fill="url(#hotTrack)" stroke="#EF4444" stroke-width="2"/>
+    <text x="400" y="280" class="cardTitle">HOT: Freshness &amp; Two-Pass Catchup</text>
+    <text x="400" y="300" class="codeLabel" fill="#FCA5A5">Query: Recent Sample Query</text>
+    
+    <!-- Cursor Pill -->
+    <rect x="400" y="315" width="100" height="24" rx="12" fill="#7F1D1D" stroke="#EF4444"/>
+    <text x="450" y="332" text-anchor="middle" class="cursorPill">hot_anchor</text>
+    
+    <!-- Pass Split Visualization (Strictly positioned right to avoid overlap) -->
+    <rect x="600" y="285" width="270" height="60" rx="8" fill="#450A0A" stroke="#B91C1C"/>
+    <text x="740" y="310" text-anchor="middle" class="annotation" fill="#FCA5A5">Pass B: Gap Catch-up</text>
+    <text x="740" y="330" text-anchor="middle" class="cardSub" fill="#FECACA">Advances cursor securely</text>
+
+    <rect x="880" y="285" width="240" height="60" rx="8" fill="#7F1D1D" stroke="#EF4444"/>
+    <text x="1000" y="310" text-anchor="middle" class="annotation" fill="#FFFFFF">Pass A: First Paint</text>
+    <text x="1000" y="330" text-anchor="middle" class="cardSub" fill="#FECACA">No cursor advance</text>
+  </g>
+
+  <!-- COLD TRACK -->
+  <g filter="url(#shadow)">
+    <rect x="380" y="385" width="760" height="110" rx="16" fill="url(#coldTrack)" stroke="#0EA5E9" stroke-width="2"/>
+    <text x="400" y="415" class="cardTitle">COLD: Historical Baseline Backfill</text>
+    <text x="400" y="435" class="codeLabel" fill="#7DD3FC">Query: Historical Chunk Query</text>
+    
+    <!-- Cursor Pill -->
+    <rect x="400" y="450" width="100" height="24" rx="12" fill="#0C4A6E" stroke="#0EA5E9"/>
+    <text x="450" y="467" text-anchor="middle" class="cursorPill">cold_time</text>
+    
+    <!-- Movement Visualization -->
+    <path d="M 640 450 L 1050 450" stroke="#082F49" stroke-width="6"/>
+    <path d="M 1000 450 C 950 450, 900 450, 850 450" fill="none" stroke="#0EA5E9" stroke-width="4" marker-end="url(#arrow-solid)"/>
+    <circle cx="1050" cy="450" r="6" fill="#38BDF8"/>
+    <text x="1050" y="430" text-anchor="middle" class="annotation" fill="#BAE6FD">Ref Now (Fixed)</text>
+    <text x="800" y="430" text-anchor="middle" class="annotation" fill="#7DD3FC">&lt;— Moving Frontier (Resumable)</text>
+  </g>
+
+  <!-- CHANGE TRACK -->
+  <g filter="url(#shadow)">
+    <rect x="380" y="520" width="760" height="110" rx="16" fill="url(#changeTrack)" stroke="#A855F7" stroke-width="2"/>
+    <text x="400" y="550" class="cardTitle">CHANGE: Delta Maintenance &amp; Correction</text>
+    <text x="400" y="570" class="codeLabel" fill="#D8B4FE">Query: HKAnchoredObjectQuery</text>
+    
+    <!-- Cursor Pill -->
+    <rect x="400" y="585" width="125" height="24" rx="12" fill="#4C1D95" stroke="#A855F7"/>
+    <text x="462" y="602" text-anchor="middle" class="cursorPill">change_anchor</text>
+    
+    <!-- Anchored Delta Stream Visualization -->
+    <circle cx="570" cy="597" r="5" fill="#D8B4FE"/>
+    <path d="M 580 597 L 1100 597" stroke="#A855F7" stroke-width="3" fill="none" marker-end="url(#arrow-solid)"/>
+    <text x="660" y="588" text-anchor="middle" class="annotation" fill="#E9D5FF">Additions</text>
+    <line x1="735" y1="582" x2="735" y2="596" stroke="#7C3AED" stroke-opacity="0.5"/>
+    <text x="810" y="588" text-anchor="middle" class="annotation" fill="#E9D5FF">Updates</text>
+    <line x1="885" y1="582" x2="885" y2="596" stroke="#7C3AED" stroke-opacity="0.5"/>
+    <text x="960" y="588" text-anchor="middle" class="annotation" fill="#E9D5FF">Soft&#x2011;Deletes</text>
+    <text x="840" y="620" text-anchor="middle" class="cardSub" fill="#D8B4FE">Anchor advances after each background batch</text>
+  </g>
+
+  <!-- Trigger Lines -->
+  <!-- JS to Hot -->
+  <path d="M 316 230 L 338 230 L 338 305 L 380 305" stroke="#F97316" stroke-width="2.5" stroke-dasharray="6 4" fill="none" marker-end="url(#arrow-dash-orange)"/>
+  <!-- JS to Cold -->
+  <path d="M 316 255 L 346 255 L 346 440 L 380 440" stroke="#F97316" stroke-width="2.5" stroke-dasharray="6 4" fill="none" marker-end="url(#arrow-dash-orange)"/>
+  <!-- JS to Change (Maintenance) -->
+  <path d="M 316 280 L 354 280 L 354 555 L 380 555" stroke="#F97316" stroke-width="2.5" stroke-dasharray="6 4" fill="none" marker-end="url(#arrow-dash-orange)"/>
+
+  <!-- OS to Change (Wake) -->
+  <path d="M 316 440 L 330 440 L 330 590 L 380 590" stroke="#F43F5E" stroke-width="2.5" stroke-dasharray="6 4" fill="none" marker-end="url(#arrow-dash-pink)"/>
+
+  <!-- ========================================================= -->
+  <!-- CONVERGENCE & ATOMIC LOCAL COMMIT (LOWER CENTER)          -->
+  <!-- ========================================================= -->
+  
+  <!-- Single clean funnel out of the Concurrent Group -->
+  <path d="M 760 670 L 760 705" stroke="#64748B" stroke-width="3" marker-end="url(#arrow-solid)"/>
+  
+  <g filter="url(#shadow)">
+    <rect x="380" y="715" width="760" height="40" rx="10" fill="#1E293B" stroke="#475569"/>
+    <text x="760" y="740" text-anchor="middle" class="cardTitle" fill="#E2E8F0">HealthNormalization (Zod Validation, Canonical Shaping)</text>
+  </g>
+
+  <path d="M 760 755 L 760 785" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow-solid)"/>
+
+  <!-- Atomic SQLite Block -->
+  <g filter="url(#glow)">
+    <rect x="320" y="795" width="880" height="140" rx="16" fill="url(#commitGrad)" stroke="#2DD4BF" stroke-width="3"/>
+  </g>
+  <text x="760" y="830" text-anchor="middle" class="title" fill="#2DD4BF" font-size="24">Atomic Local Commit (SQLite)</text>
+  <text x="760" y="855" text-anchor="middle" class="annotation" fill="#A7F3D0" font-weight="bold">Local Operational Source of Truth</text>
+  <text x="760" y="875" text-anchor="middle" class="cardSub" fill="#6EE7B7">Samples + cursor state committed securely in the same transaction</text>
+
+  <!-- Tables inside Commit -->
+  <rect x="370" y="885" width="240" height="36" rx="8" fill="#022C22" stroke="#059669"/>
+  <text x="490" y="908" text-anchor="middle" class="codeLabel">health_samples</text>
+  
+  <rect x="640" y="885" width="240" height="36" rx="8" fill="#022C22" stroke="#059669"/>
+  <text x="760" y="908" text-anchor="middle" class="codeLabel">health_ingest_cursors</text>
+
+  <rect x="910" y="885" width="240" height="36" rx="8" fill="#022C22" stroke="#059669"/>
+  <text x="1030" y="908" text-anchor="middle" class="codeLabel">health_sample_deletion_queue</text>
+
+  <!-- ========================================================= -->
+  <!-- DOWNSTREAM CONSUMERS (RIGHT)                              -->
+  <!-- ========================================================= -->
+  <text x="1240" y="325" class="groupTitle">Downstream Consumers</text>
+  
+  <path d="M 1200 845 L 1235 845 L 1235 415 L 1250 415" stroke="#2DD4BF" stroke-width="2" fill="none" marker-end="url(#arrow-solid-teal)"/>
+  <path d="M 1200 865 L 1225 865 L 1225 595 L 1250 595" stroke="#2DD4BF" stroke-width="2" fill="none" marker-end="url(#arrow-solid-teal)"/>
+
+  <!-- Upload -->
+  <g filter="url(#shadow)">
+    <rect x="1250" y="350" width="280" height="130" rx="12" fill="url(#panelGrad)" stroke="#38BDF8"/>
+    <rect x="1250" y="350" width="6" height="130" rx="3" fill="#38BDF8"/>
+    <text x="1270" y="380" class="cardTitle">Cloud Upload Engine</text>
+    <text x="1270" y="405" class="cardSub">Consumes health_samples</text>
+    <text x="1270" y="425" class="cardSub">Consumes deletion_queue</text>
+    <text x="1270" y="445" class="cardSub">Idempotent payload sync</text>
+    <text x="1270" y="465" class="cardSub">to backend servers</text>
+  </g>
+
+  <!-- Projection Refresh -->
+  <g filter="url(#shadow)">
+    <rect x="1250" y="530" width="280" height="130" rx="12" fill="url(#panelGrad)" stroke="#818CF8"/>
+    <rect x="1250" y="530" width="6" height="130" rx="3" fill="#818CF8"/>
+    <text x="1270" y="560" class="cardTitle">Projection Refresh Service</text>
+    <text x="1270" y="585" class="cardSub">Driven by DB dirty keys</text>
+    <text x="1270" y="605" class="cardSub">Hydrates UI read models</text>
+    <text x="1270" y="625" class="cardSub">(e.g., Daily, Sleep rollups)</text>
+    <text x="1270" y="645" class="cardSub">Feeds immediate UX</text>
+  </g>
+
+  <!-- Read Models Storage -->
+  <g filter="url(#shadow)">
+    <rect x="1250" y="710" width="280" height="70" rx="12" fill="#0F172A" stroke="#475569"/>
+    <text x="1390" y="740" text-anchor="middle" class="cardTitle">Local UI Read Models</text>
+    <text x="1390" y="760" text-anchor="middle" class="cardSub">Optimized SQLite aggregations</text>
+  </g>
+  
+  <path d="M 1380 660 L 1380 700" stroke="#818CF8" stroke-width="2" marker-end="url(#arrow-solid)"/>
+
+  <!-- Legend -->
+  <rect x="1340" y="40" width="200" height="100" rx="8" fill="#1E293B" stroke="#334155" opacity="0.9"/>
+  <text x="1355" y="65" class="cardTitle" font-size="14">Flow Legend</text>
+  <path d="M 1355 80 L 1395 80" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow-solid)"/>
+  <text x="1405" y="85" class="cardSub" font-size="13">Data / Result</text>
+  
+  <path d="M 1355 100 L 1395 100" stroke="#F97316" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow-solid)"/>
+  <text x="1405" y="105" class="cardSub" font-size="13">Control/Trigger</text>
+  
+  <path d="M 1355 120 L 1395 120" stroke="#2DD4BF" stroke-width="2" marker-end="url(#arrow-solid-teal)"/>
+  <text x="1405" y="125" class="cardSub" font-size="13">Downstream Read</text>
+
+</svg>
