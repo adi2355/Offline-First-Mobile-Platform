@@ -301,39 +301,65 @@ For granular analysis of each subsystem, refer to the domain-specific documentat
 
 ```
 src/
-├── services/
-│   ├── ble/                    # BLE device communication & binary protocol
-│   │   ├── BluetoothService.ts
-│   │   ├── BLERestorationService.ts
-│   │   └── AppDeviceProtocolService.ts
-│   ├── sync/                   # Offline-first sync engines
-│   │   ├── DataSyncService.ts
-│   │   ├── SyncCoordinator.ts
-│   │   ├── PushEngine.ts
-│   │   ├── PullEngine.ts
-│   │   └── ApplyEngine.ts
-│   ├── health/                 # Health ingestion & projection refresh
-│   └── domain/                 # Domain services (consumption, session, journal)
+├── constants/                  # App constants (BLE UUIDs, theme tokens)
+├── contexts/                   # React contexts (Bluetooth)
+├── db/
+│   └── schema.ts               # Drizzle ORM SQLite schema
+├── hooks/                      # Custom React hooks (sync, health, BLE, sleep)
+├── migrations/                 # SQLite migration definitions
+├── native/                     # JS-side native module wrappers (BLE bridge)
+├── providers/                  # App-level React providers
 ├── repositories/
 │   ├── offline/                # Outbox, cursor, ID map, tombstone repositories
 │   └── health/                 # Local projection read models (rollups, sleep, impact)
-├── hooks/                      # Custom React hooks (useHealthRollups, useSleepSummaries)
-├── contexts/                   # React contexts (auth, sync, BLE)
-└── utils/                      # Shared utilities
+├── services/
+│   ├── ble/                    # BLE device communication & binary protocol
+│   │   ├── protocol/           # Binary framing, CRC16, message types
+│   │   ├── ota/                # OTA state machine & post-update verification
+│   │   └── transport/          # Transport layer abstraction
+│   ├── sync/                   # Offline-first sync engines
+│   │   ├── engines/            # Push, Pull, Apply engines & coordinator
+│   │   ├── handlers/           # Entity-specific sync handlers & registry
+│   │   ├── config/             # Entity mappings, SQL builders, transforms
+│   │   ├── repositories/       # Sync-specific repository adapters
+│   │   └── utils/              # Cascade executor, FK resolver, custom merges
+│   ├── health/                 # Health ingestion, upload, projection refresh
+│   │   ├── drivers/            # Native & JS ingestion driver implementations
+│   │   └── types/              # Ingestion driver interfaces
+│   ├── domain/                 # Domain services (session management)
+│   ├── native/                 # Factory reset & keychain wipe services
+│   └── startup/                # Startup orchestrator & metrics
+├── types/                      # Global type declarations (BLE, firmware, Socket.IO)
+├── utils/                      # Logging, errors, crypto, network, time utilities
+└── validation/                 # Outbox payload validation
 
 ios/
-├── AppDeviceBLE/                # Native BLE runtime
-│   ├── AppDeviceBLECore.swift   # CBCentralManager singleton, state restoration
-│   └── AppDeviceBLEModule.swift # RCTEventEmitter bridge with EventBuffer
-├── HealthIngest/               # Native health ingestion
-│   ├── HealthIngestCore.swift  # Lane-based OperationQueues (HOT/COLD/CHANGE)
-│   └── HealthIngestSQLite.swift# Atomic C API persistence
-└── ReinstallGuard/             # Keychain-based reinstall detection
+├── AppPlatform/
+│   ├── AppPlatformBLE/         # Native BLE runtime
+│   │   ├── AppPlatformBLECore.swift      # CBCentralManager singleton, state restoration
+│   │   ├── AppPlatformBLEModule.swift    # RCTEventEmitter bridge with EventBuffer
+│   │   └── AppPlatformBLEInitializer.swift
+│   ├── HealthIngest/           # Native health ingestion
+│   │   ├── HealthIngestCore.swift        # Lane-based OperationQueues (HOT/COLD/CHANGE)
+│   │   ├── HealthIngestSQLite.swift      # Atomic C API persistence
+│   │   ├── HealthKitObserver.swift       # Background delivery registration
+│   │   ├── HealthKitQueries.swift        # HKSampleQuery / HKAnchoredObjectQuery
+│   │   └── HealthNormalization.swift     # Unit normalization across sample types
+│   └── FactoryReset/           # Keychain-based reinstall detection & recovery
+│       ├── ReinstallDetector.swift
+│       ├── FactoryResetGuard.swift
+│       └── KeychainWipeModule.swift
+├── AppPlatformTests/
+│   └── HealthIngest/           # Native unit tests (SQLite, normalization, gap math)
 
-app/                            # Expo Router screens (file-based routing)
-├── (tabs)/                     # Main tab navigation
-├── (auth)/                     # Auth flow screens
-└── _components/                # Shared UI components
+android/
+└── app/src/main/java/com/AppPlatformReactNativeApp/
+    ├── appplatformble/         # Android BLE runtime (CoreBluetooth equivalent)
+    │   ├── AppPlatformBLECore.kt
+    │   ├── AppPlatformBLEModule.kt
+    │   └── AppPlatformBleForegroundService.kt
+    ├── MainActivity.kt
+    └── MainApplication.kt
 ```
 
 </details>
