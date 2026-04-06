@@ -27,6 +27,47 @@ The system is designed for the real world, not the happy path. It handles interm
 
 <br>
 
+
+<summary><h2>Technology Stack</h2></summary>
+<br>
+
+<table>
+<tr>
+<td><strong>Languages</strong></td>
+<td><img src="https://img.shields.io/badge/Swift-F05138?style=flat-square&logo=swift&logoColor=white" alt="Swift" /> <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" /> <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white" alt="Kotlin" /></td>
+</tr>
+<tr>
+<td><strong>Mobile Framework</strong></td>
+<td><img src="https://img.shields.io/badge/React_Native-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React Native" /> <img src="https://img.shields.io/badge/Expo-000020?style=flat-square&logo=expo&logoColor=white" alt="Expo" /> <img src="https://img.shields.io/badge/Expo_Router-000020?style=flat-square&logo=expo&logoColor=white" alt="Expo Router" /></td>
+</tr>
+<tr>
+<td><strong>Local Storage</strong></td>
+<td><img src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite" /> <img src="https://img.shields.io/badge/Drizzle_ORM-C5F74F?style=flat-square&logo=drizzle&logoColor=black" alt="Drizzle ORM" /></td>
+</tr>
+<tr>
+<td><strong>BLE & Device</strong></td>
+<td><img src="https://img.shields.io/badge/CoreBluetooth-007AFF?style=flat-square&logo=apple&logoColor=white" alt="CoreBluetooth" /> <img src="https://img.shields.io/badge/BLE_PLX-4285F4?style=flat-square&logoColor=white" alt="react-native-ble-plx" /></td>
+</tr>
+<tr>
+<td><strong>Health Platforms</strong></td>
+<td><img src="https://img.shields.io/badge/HealthKit-FF2D55?style=flat-square&logo=apple&logoColor=white" alt="HealthKit" /> <img src="https://img.shields.io/badge/Health_Connect-4285F4?style=flat-square&logo=google&logoColor=white" alt="Health Connect" /></td>
+</tr>
+<tr>
+<td><strong>State & Validation</strong></td>
+<td><img src="https://img.shields.io/badge/React_Query-FF4154?style=flat-square&logo=reactquery&logoColor=white" alt="React Query" /> <img src="https://img.shields.io/badge/Zod-3E67B1?style=flat-square&logo=zod&logoColor=white" alt="Zod" /></td>
+</tr>
+<tr>
+<td><strong>Backend Integration</strong></td>
+<td><img src="https://img.shields.io/badge/REST_API-009688?style=flat-square&logoColor=white" alt="REST API" /> <img src="https://img.shields.io/badge/Socket.IO-010101?style=flat-square&logo=socketdotio&logoColor=white" alt="Socket.IO" /></td>
+</tr>
+<tr>
+<td><strong>Testing</strong></td>
+<td><img src="https://img.shields.io/badge/Jest-C21325?style=flat-square&logo=jest&logoColor=white" alt="Jest" /> <img src="https://img.shields.io/badge/Testing_Library-E33332?style=flat-square&logo=testinglibrary&logoColor=white" alt="Testing Library" /></td>
+</tr>
+</table>
+
+---
+
 ## Engineering Principles
 
 ### 1. Treat local state as the durable interaction layer
@@ -251,46 +292,6 @@ For granular analysis of each subsystem, refer to the domain-specific documentat
 | **Reinstall Detection** | iOS Keychain marker + sandbox sentinel with bounded factory reset guard |
 
 ---
-
-
-<summary><h2>Technology Stack</h2></summary>
-<br>
-
-<table>
-<tr>
-<td><strong>Languages</strong></td>
-<td><img src="https://img.shields.io/badge/Swift-F05138?style=flat-square&logo=swift&logoColor=white" alt="Swift" /> <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" /> <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white" alt="Kotlin" /></td>
-</tr>
-<tr>
-<td><strong>Mobile Framework</strong></td>
-<td><img src="https://img.shields.io/badge/React_Native-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React Native" /> <img src="https://img.shields.io/badge/Expo-000020?style=flat-square&logo=expo&logoColor=white" alt="Expo" /> <img src="https://img.shields.io/badge/Expo_Router-000020?style=flat-square&logo=expo&logoColor=white" alt="Expo Router" /></td>
-</tr>
-<tr>
-<td><strong>Local Storage</strong></td>
-<td><img src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite" /> <img src="https://img.shields.io/badge/Drizzle_ORM-C5F74F?style=flat-square&logo=drizzle&logoColor=black" alt="Drizzle ORM" /></td>
-</tr>
-<tr>
-<td><strong>BLE & Device</strong></td>
-<td><img src="https://img.shields.io/badge/CoreBluetooth-007AFF?style=flat-square&logo=apple&logoColor=white" alt="CoreBluetooth" /> <img src="https://img.shields.io/badge/BLE_PLX-4285F4?style=flat-square&logoColor=white" alt="react-native-ble-plx" /></td>
-</tr>
-<tr>
-<td><strong>Health Platforms</strong></td>
-<td><img src="https://img.shields.io/badge/HealthKit-FF2D55?style=flat-square&logo=apple&logoColor=white" alt="HealthKit" /> <img src="https://img.shields.io/badge/Health_Connect-4285F4?style=flat-square&logo=google&logoColor=white" alt="Health Connect" /></td>
-</tr>
-<tr>
-<td><strong>State & Validation</strong></td>
-<td><img src="https://img.shields.io/badge/React_Query-FF4154?style=flat-square&logo=reactquery&logoColor=white" alt="React Query" /> <img src="https://img.shields.io/badge/Zod-3E67B1?style=flat-square&logo=zod&logoColor=white" alt="Zod" /></td>
-</tr>
-<tr>
-<td><strong>Backend Integration</strong></td>
-<td><img src="https://img.shields.io/badge/REST_API-009688?style=flat-square&logoColor=white" alt="REST API" /> <img src="https://img.shields.io/badge/Socket.IO-010101?style=flat-square&logo=socketdotio&logoColor=white" alt="Socket.IO" /></td>
-</tr>
-<tr>
-<td><strong>Testing</strong></td>
-<td><img src="https://img.shields.io/badge/Jest-C21325?style=flat-square&logo=jest&logoColor=white" alt="Jest" /> <img src="https://img.shields.io/badge/Testing_Library-E33332?style=flat-square&logo=testinglibrary&logoColor=white" alt="Testing Library" /></td>
-</tr>
-</table>
-
 
 
 ---
