@@ -65,7 +65,7 @@ The system is designed for the real world, not the happy path. It handles interm
 </tr>
 </table>
 
----
+<br>
 
 ## Engineering Principles
 
