@@ -27,7 +27,7 @@ The system is designed for the real world, not the happy path. It handles interm
 
 ---
 
-<summary><h2>Technology Stack</h2></summary>
+## Technology Stack
 <br>
 
 <table>
