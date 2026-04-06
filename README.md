@@ -25,10 +25,10 @@ This repository contains the architecture for an offline-first, device-connected
 
 The system is designed for the real world, not the happy path. It handles intermittent connectivity, strict mobile OS lifecycle constraints, high-volume health data ingestion, and BLE device communication under background execution limits. The architecture prioritizes **local data ownership**, **sync correctness**, and **native runtime resilience**. The platform remains functional, observable, and recoverable under all operating conditions.
 
----
+<br>
 
 ## Technology Stack
-<br>
+
 
 <table>
 <tr>
