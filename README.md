@@ -364,7 +364,7 @@ For granular analysis of each subsystem, refer to the domain-specific documentat
 │   └── AppPlatformTests/
 │       └── HealthIngest/                   # Native unit tests (SQLite, normalization, gap math)
 ├── android/                                # Native Android source
-│   └── app/src/main/java/com/AppPlatformReactNativeApp/
+│   └── AppPlatformReactNativeApp/
 │       ├── appplatformble/                 # Android BLE runtime
 │       │   ├── AppPlatformBLECore.kt
 │       │   ├── AppPlatformBLEModule.kt
