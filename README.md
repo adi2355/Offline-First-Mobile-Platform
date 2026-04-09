@@ -11,7 +11,7 @@
 <div align="left">
   <a href="https://testflight.apple.com/join/PJQFcf2G"><img src="https://img.shields.io/badge/Download_on_TestFlight-0D96F6?style=for-the-badge&logo=apple&logoColor=white" alt="Download on TestFlight" /></a>
   <br><br>
-  <strong>Try the live beta on your iPhone:</strong><br>
+  <strong>You can test the live beta on your iPhone:</strong><br>
   1. Install <a href="https://apps.apple.com/app/testflight/id899247664">TestFlight</a> from the App Store<br>
   2. Open the <a href="https://testflight.apple.com/join/PJQFcf2G">beta invite link</a> and tap <strong>Accept</strong><br>
   3. Download the app from TestFlight.
