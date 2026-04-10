@@ -126,9 +126,9 @@ graph TD
 
 The sync subsystem is built upon a set of well-defined components, each with a clear responsibility.
 
-### Offline Repositories (`src/repositories/offline/`)
+### Offline Repositories (`code-snippets/repositories/offline/`)
 
-These repositories (`src/repositories/offline/index.ts`) manage the local SQLite database for transactional outbox patterns, cursor-based synchronization, and deletion tracking.
+These repositories (`code-snippets/repositories/offline/index.ts`) manage the local SQLite database for transactional outbox patterns, cursor-based synchronization, and deletion tracking.
 
 *   **`OutboxRepository`** — Manages the `outbox_events` table. This is the queue for all local mutations (CREATE, UPDATE, DELETE). It handles in-memory deduplication of commands for the same entity and manages retry states. Outbox event IDs are UUIDs.
 *   **`CursorRepository`** — Manages the `cursor_state` table. It tracks the last successfully processed record for each `EntityType` using a `lastCreatedAt` timestamp and `lastId` UUID. Crucial for incremental pull operations and enforcing monotonic cursor advancement.
@@ -137,33 +137,33 @@ These repositories (`src/repositories/offline/index.ts`) manage the local SQLite
 
 ### Service Facade (`DataSyncService`)
 
-Located at `src/services/sync/DataSyncService.ts`, this class is the primary entry point for the sync subsystem. It orchestrates the high-level sync flow, manages global sync state, integrates with `AuthTokens` (via `BackendAPIClient`) and `DeviceIdManager`, and delegates the core sync logic to the `SyncCoordinator` engine stack. It also includes robust mechanisms for handling network connectivity, app lifecycle changes, and triggering syncs based on local data mutations.
+Located at `code-snippets/services/sync/DataSyncService.ts`, this class is the primary entry point for the sync subsystem. It orchestrates the high-level sync flow, manages global sync state, integrates with `AuthTokens` (via `BackendAPIClient`) and `DeviceIdManager`, and delegates the core sync logic to the `SyncCoordinator` engine stack. It also includes robust mechanisms for handling network connectivity, app lifecycle changes, and triggering syncs based on local data mutations.
 
 ### Coordination & Resource Management
 
-*   **`SyncScheduler`** (`src/services/sync/SyncScheduler.ts`) — A shared, global scheduler that prioritizes and queues various sync-related tasks (`data_sync`, `health_ingest`, `catalog_sync`). It manages concurrency limits for resources like network and SQLite access, integrating with `CooperativeYieldController` for main thread responsiveness.
-*   **`SyncLeaseManager`** (`src/services/sync/SyncLeaseManager.ts`) — Responsible for acquiring and managing `SyncLease`s from the backend (`/sync/lease` endpoint). Leases provide admission control for bulk operations (e.g., large catalog syncs, health data uploads), preventing server overload and ensuring fair resource usage.
+*   **`SyncScheduler`** (`code-snippets/services/sync/SyncScheduler.ts`) — A shared, global scheduler that prioritizes and queues various sync-related tasks (`data_sync`, `health_ingest`, `catalog_sync`). It manages concurrency limits for resources like network and SQLite access, integrating with `CooperativeYieldController` for main thread responsiveness.
+*   **`SyncLeaseManager`** (`code-snippets/services/sync/SyncLeaseManager.ts`) — Responsible for acquiring and managing `SyncLease`s from the backend (`/sync/lease` endpoint). Leases provide admission control for bulk operations (e.g., large catalog syncs, health data uploads), preventing server overload and ensuring fair resource usage.
 
-### Engine Stack (`src/services/sync/engines/`)
+### Engine Stack (`code-snippets/services/sync/engines/`)
 
-The core sync logic is implemented as a composable engine stack (`src/services/sync/engines/index.ts`), orchestrated by the `SyncCoordinator`. This architecture (defined in `src/services/sync/engines/compositionRoot.ts`) promotes modularity and testability.
+The core sync logic is implemented as a composable engine stack (`code-snippets/services/sync/engines/index.ts`), orchestrated by the `SyncCoordinator`. This architecture (defined in `code-snippets/services/sync/engines/compositionRoot.ts`) promotes modularity and testability.
 
-*   **`SyncCoordinator`** (`src/services/sync/engines/SyncCoordinator.ts`) — The main orchestrator of the entire sync lifecycle. Acquires global locks, initializes the `SyncBatchContext`, sequentially executes the `PushEngine`, `PullEngine`, and `IntegrityGate` phases, and commits deferred cursors upon successful completion.
-*   **`PushEngine`** (`src/services/sync/engines/PushEngine.ts`) — Responsible for the push phase. Dequeues local changes from `OutboxRepository` and `TombstoneRepository`, resolves foreign keys, orders commands, constructs `PushCommandsRequest` payloads, sends them to the backend API, and processes the `PushCommandsResponse`.
-*   **`PullEngine`** (`src/services/sync/engines/PullEngine.ts`) — Manages the pull phase. Builds a `CompositeCursor` from individual entity cursors, fetches changes from the backend's `/sync/changes` endpoint, and delegates the application of these changes to the `ApplyEngine`.
-*   **`ApplyEngine`** (`src/services/sync/engines/ApplyEngine.ts`) — Executes the apply phase. Receives `PullChangeItem`s (CREATE, UPDATE, DELETE) and applies them to the local SQLite database. Leverages `FrontendSyncHandlerRegistry` for entity-specific logic or falls back to generic SQL builders.
+*   **`SyncCoordinator`** (`code-snippets/services/sync/engines/SyncCoordinator.ts`) — The main orchestrator of the entire sync lifecycle. Acquires global locks, initializes the `SyncBatchContext`, sequentially executes the `PushEngine`, `PullEngine`, and `IntegrityGate` phases, and commits deferred cursors upon successful completion.
+*   **`PushEngine`** (`code-snippets/services/sync/engines/PushEngine.ts`) — Responsible for the push phase. Dequeues local changes from `OutboxRepository` and `TombstoneRepository`, resolves foreign keys, orders commands, constructs `PushCommandsRequest` payloads, sends them to the backend API, and processes the `PushCommandsResponse`.
+*   **`PullEngine`** (`code-snippets/services/sync/engines/PullEngine.ts`) — Manages the pull phase. Builds a `CompositeCursor` from individual entity cursors, fetches changes from the backend's `/sync/changes` endpoint, and delegates the application of these changes to the `ApplyEngine`.
+*   **`ApplyEngine`** (`code-snippets/services/sync/engines/ApplyEngine.ts`) — Executes the apply phase. Receives `PullChangeItem`s (CREATE, UPDATE, DELETE) and applies them to the local SQLite database. Leverages `FrontendSyncHandlerRegistry` for entity-specific logic or falls back to generic SQL builders.
 
 ### Handler / Config Layer
 
-*   **`FrontendSyncHandlerRegistry`** (`src/services/sync/handlers/FrontendSyncHandlerRegistry.ts`) — A central registry that maps each `EntityType` to its corresponding `FrontendSyncEntityHandler` implementation, enabling the engine stack to dynamically select the correct handler for each entity.
-*   **`GenericSyncHandler`** (`src/services/sync/handlers/GenericSyncHandler.ts`) — A highly configurable handler implementing the `FrontendSyncEntityHandler` interface. Uses shared conflict configurations (`conflict-configs.ts`) and pure custom merge functions (from `src/services/sync/utils/custom-merges/`) to manage local entity persistence, conflict resolution, and ID replacement cascades (`CascadeExecutor`). Used for most entity types, with specific merge logic delegated to pure functions.
+*   **`FrontendSyncHandlerRegistry`** (`code-snippets/services/sync/handlers/FrontendSyncHandlerRegistry.ts`) — A central registry that maps each `EntityType` to its corresponding `FrontendSyncEntityHandler` implementation, enabling the engine stack to dynamically select the correct handler for each entity.
+*   **`GenericSyncHandler`** (`code-snippets/services/sync/handlers/GenericSyncHandler.ts`) — A highly configurable handler implementing the `FrontendSyncEntityHandler` interface. Uses shared conflict configurations (`conflict-configs.ts`) and pure custom merge functions (from `code-snippets/services/sync/utils/custom-merges/`) to manage local entity persistence, conflict resolution, and ID replacement cascades (`CascadeExecutor`). Used for most entity types, with specific merge logic delegated to pure functions.
 *   **Shared Sync Config / Relation Graph** — Canonical definitions (`packages/shared/src/sync-config/`) specifying entity relationships (`RELATION_GRAPH.ts`), conflict resolution policies (`ENTITY_CONFLICT_CONFIG.ts`), and cursor semantics (`cursor.ts`). These shared contracts ensure consistent behavior across frontend and backend.
 
 ---
 
 ## Sync Metadata Model
 
-The sync subsystem relies on dedicated local metadata tables in SQLite (`src/db/schema.ts`) to manage its state and guarantee correctness. This metadata is distinct from the primary domain data.
+The sync subsystem relies on dedicated local metadata tables in SQLite (`code-snippets/db/schema.ts`) to manage its state and guarantee correctness. This metadata is distinct from the primary domain data.
 
 | Metadata Artifact | Purpose | Key Fields | Updated By | Consumed By | Failure Role |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -179,9 +179,9 @@ The sync subsystem relies on dedicated local metadata tables in SQLite (`src/db/
 
 The push path guarantees that local mutations made while offline or online are durably committed locally and eventually synchronized to the backend.
 
-1.  **Local Mutation & Outbox Enqueue** — When a user creates, updates, or deletes an entity, the UI/domain service calls the local entity repository. This operation is performed **atomically within a single SQLite transaction** that both updates the local domain table *and* enqueues a corresponding command (CREATE, UPDATE, or DELETE) into the `OutboxRepository` (`src/repositories/offline/OutboxRepository.ts`). This ensures that a local change is never committed without a corresponding outbox entry.
+1.  **Local Mutation & Outbox Enqueue** — When a user creates, updates, or deletes an entity, the UI/domain service calls the local entity repository. This operation is performed **atomically within a single SQLite transaction** that both updates the local domain table *and* enqueues a corresponding command (CREATE, UPDATE, or DELETE) into the `OutboxRepository` (`code-snippets/repositories/offline/OutboxRepository.ts`). This ensures that a local change is never committed without a corresponding outbox entry.
 
-2.  **Command Dequeue & Deduplication** — The `PushEngine` (`src/services/sync/engines/PushEngine.ts`) periodically (or on demand) dequeues a batch of actionable commands from the `OutboxRepository`. This includes commands with a `PENDING` status (new mutations) and retryable `FAILED` commands (previous transient failures). The dequeue process performs in-memory deduplication:
+2.  **Command Dequeue & Deduplication** — The `PushEngine` (`code-snippets/services/sync/engines/PushEngine.ts`) periodically (or on demand) dequeues a batch of actionable commands from the `OutboxRepository`. This includes commands with a `PENDING` status (new mutations) and retryable `FAILED` commands (previous transient failures). The dequeue process performs in-memory deduplication:
     *   Multiple `UPDATE`s for the same entity are resolved to the latest version.
     *   A `CREATE` followed by a `DELETE` for an entity not yet synced is cancelled (net no-op).
 
@@ -365,13 +365,13 @@ sequenceDiagram
 
 The app's conflict resolution model leverages a config-driven approach for deterministic and consistent merging of divergent local and server changes.
 
-*   **Generic Handler Model** — The `GenericSyncHandler` (`src/services/sync/handlers/GenericSyncHandler.ts`) acts as the unified conflict resolution engine for most entity types. This replaces a proliferation of entity-specific merge logic with a single, highly configurable implementation.
+*   **Generic Handler Model** — The `GenericSyncHandler` (`code-snippets/services/sync/handlers/GenericSyncHandler.ts`) acts as the unified conflict resolution engine for most entity types. This replaces a proliferation of entity-specific merge logic with a single, highly configurable implementation.
 
 *   **Shared Conflict Configuration** — The core merge logic is driven by `ENTITY_CONFLICT_CONFIG` (from `@shared/contracts/sync-config/conflict-configs.ts`). This immutable configuration defines `fieldPolicies` for each entity (e.g., `LOCAL_WINS`, `SERVER_WINS`, `MERGE_ARRAYS`, `MONOTONIC`) and `serverDerivedFields` that are always authoritative. This shared contract ensures consistent merge behavior across frontend and backend.
 
 *   **Deterministic Merge Behavior** — The pure `mergeEntity()` function (from `@shared/contracts/sync-config/entity-merger.ts`), or specific `customMerge` functions, are used for conflict resolution. These functions are stateless, side-effect-free, and leverage a `MergeContext` (which includes a deterministic timestamp `now`) to ensure that the same inputs always produce identical merged outputs.
 
-*   **Custom Merge Escape Hatches** — For entities with particularly complex merge logic that cannot be expressed purely through field policies (e.g., `sessions` with server-derived aggregates, `consumptions` with idempotency keys, `products` with public/private splits, `devices` with ephemeral data handling, `journal_entries` with array unions and deep object merges), `GenericSyncHandler` delegates to specific pure `customMerge` functions (defined in `src/services/sync/utils/custom-merges/`). This provides flexibility without sacrificing the generic handler model.
+*   **Custom Merge Escape Hatches** — For entities with particularly complex merge logic that cannot be expressed purely through field policies (e.g., `sessions` with server-derived aggregates, `consumptions` with idempotency keys, `products` with public/private splits, `devices` with ephemeral data handling, `journal_entries` with array unions and deep object merges), `GenericSyncHandler` delegates to specific pure `customMerge` functions (defined in `code-snippets/services/sync/utils/custom-merges/`). This provides flexibility without sacrificing the generic handler model.
 
 *   **Conflict Outcomes** — Resolution during the push phase yields an explicit `ConflictResolutionOutcome` (`ADOPT_SERVER`, `REBASE_AND_RETRY`, `MANUAL_REQUIRED`, `SKIPPED`), dictating precise actions on the outbox command (e.g., mark `COMPLETED`, update payload for retry, move to `DEAD_LETTER`).
 
@@ -437,7 +437,7 @@ Cursors are fundamental to the incremental synchronization model, providing stri
 
 ## Integrity Gate and Relational Correctness
 
-The `IntegrityGate` (`src/services/sync/IntegrityGate.ts`) is a post-sync validation step designed to detect and prevent data corruption in the local SQLite database.
+The `IntegrityGate` (`code-snippets/services/sync/IntegrityGate.ts`) is a post-sync validation step designed to detect and prevent data corruption in the local SQLite database.
 
 *   **Why it Runs After Sync** — The `IntegrityGate` operates *after* the `Pull` phase has applied all server changes (and potentially after `Push` has completed its ID replacements and cascades), but *before* cursors are committed. Any referential integrity violations caused by the sync operation are caught before the sync is declared successful and cursors are advanced.
 
@@ -445,7 +445,7 @@ The `IntegrityGate` (`src/services/sync/IntegrityGate.ts`) is a post-sync valida
 
 *   **Targeted Orphan Detection** — To optimize performance, the `IntegrityGate` performs *scoped* checks using `touchedIds` (IDs of local source rows modified in the current sync batch) and `touchedTargetIds` (IDs of parent rows that were replaced or deleted) from `SyncBatchContext`. This focuses queries on potentially affected relationships.
 
-*   **SQL Query Building** — Pure functions like `buildOrphanDetectionQuery()` and `buildTargetSideOrphanQuery()` (`src/services/sync/IntegrityGate.ts`) generate parameterized SQL queries to efficiently find `IntegrityViolation`s (orphaned FK references).
+*   **SQL Query Building** — Pure functions like `buildOrphanDetectionQuery()` and `buildTargetSideOrphanQuery()` (`code-snippets/services/sync/IntegrityGate.ts`) generate parameterized SQL queries to efficiently find `IntegrityViolation`s (orphaned FK references).
 
 *   **Operational Meaning of Failures:**
     *   **`IntegrityViolationError`** — Thrown in `failFastMode` when orphaned FK references are detected for *required* FKs. Indicates actual data corruption that must be addressed immediately.
@@ -519,7 +519,7 @@ The sync subsystem incorporates sophisticated coordination mechanisms to ensure 
 
 The sync subsystem is designed for resilience, with explicit failure handling and recovery mechanisms at multiple layers.
 
-*   **Typed Errors** — `SyncEngineError` (from `src/services/sync/engines/types.ts`) provides structured, machine-readable error codes (`NETWORK_ERROR`, `RATE_LIMITED`, `FK_RESOLUTION_FAILED`, `INTEGRITY_VIOLATION`, etc.) and a `retryable` flag, enabling programmatic error handling and targeted retry strategies.
+*   **Typed Errors** — `SyncEngineError` (from `code-snippets/services/sync/engines/types.ts`) provides structured, machine-readable error codes (`NETWORK_ERROR`, `RATE_LIMITED`, `FK_RESOLUTION_FAILED`, `INTEGRITY_VIOLATION`, etc.) and a `retryable` flag, enabling programmatic error handling and targeted retry strategies.
 
 *   **Retryable vs. Non-Retryable Failures:**
     *   **Retryable** — Transient errors (network outages, temporary server errors, rate limits) are retried with exponential backoff and jitter (`BackendAPIClient`).
@@ -571,7 +571,7 @@ The sync subsystem is rigorously tested to ensure correctness, reliability, and 
 
 *   **End-to-End Sync Integration Tests** — Comprehensive integration tests simulate offline mutations, network reconnections, concurrent changes, and various failure scenarios, validating the entire `SyncCoordinator.performFullSync` lifecycle.
 
-*   **Schema Verification** — `src/db/test-mappers.ts` and validation utilities in `src/services/sync/config/entity-mappings/schema.ts` explicitly verify Drizzle schema mappings and consistency with `_ENTITY_COLUMN_MAPPINGS` and `RELATION_GRAPH`.
+*   **Schema Verification** — `code-snippets/db/test-mappers.ts` and validation utilities in `code-snippets/services/sync/config/entity-mappings/schema.ts` explicitly verify Drizzle schema mappings and consistency with `_ENTITY_COLUMN_MAPPINGS` and `RELATION_GRAPH`.
 
 ---
 

@@ -107,7 +107,7 @@ The `AppDeviceBLEModule.swift` bridge is designed for reliability and robust eve
 
 ## TypeScript Native Integration
 
-The JavaScript layer integrates with the native module via `src/native/AppDeviceBLE.ts` and `src/native/useAppDeviceBLEIntegration.ts`:
+The JavaScript layer integrates with the native module via `code-snippets/native/AppDeviceBLE.ts` and `code-snippets/native/useAppDeviceBLEIntegration.ts`:
 
 *   **`AppDeviceBLENative.ts` Wrapper** — A thin, type-safe TypeScript wrapper around the `NativeModules.AppDeviceBLE` object.
 *   **`useAppDeviceBLEIntegration.ts` Hook** — The primary integration point:
@@ -120,13 +120,13 @@ The JavaScript layer integrates with the native module via `src/native/AppDevice
 
 ## BLE Orchestration Above the Transport
 
-Above the raw BLE transport, TypeScript services (`src/services/ble/`) orchestrate higher-level device communication:
+Above the raw BLE transport, TypeScript services (`code-snippets/services/ble/`) orchestrate higher-level device communication:
 
 *   **`BluetoothHandler` (`BluetoothContext.tsx`)** — The central JS singleton. Manages dual-transport selection, `ConnectionState`, reconnection logic, and dispatches data to other protocol services.
 *   **`BluetoothService`** — Provides application-level device management APIs (discovery, persistence).
 *   **`BLERestorationService`** — Handles application-level device/session state restoration.
-*   **`EventSyncService` (`src/services/ble/EventSyncService.ts`)** — Manages event-level synchronization (e.g., `lastEventId`, `timeSyncAnchor`, handshake flow), processing hit events asynchronously.
-*   **`DeviceSettingsService` (`src/services/ble/DeviceSettingsService.ts`)** — Manages device settings (e.g., `sensitivity`) with optimistic updates, debounce, and factory reset detection.
+*   **`EventSyncService` (`code-snippets/services/ble/EventSyncService.ts`)** — Manages event-level synchronization (e.g., `lastEventId`, `timeSyncAnchor`, handshake flow), processing hit events asynchronously.
+*   **`DeviceSettingsService` (`code-snippets/services/ble/DeviceSettingsService.ts`)** — Manages device settings (e.g., `sensitivity`) with optimistic updates, debounce, and factory reset detection.
 *   **OTA Integration** — Services like `OtaPostUpdateVerifier` integrate with `BluetoothHandler` for post-firmware-update connection and verification.
 
 ---
@@ -135,7 +135,7 @@ Above the raw BLE transport, TypeScript services (`src/services/ble/`) orchestra
 
 The architecture uses a dynamic transport selection strategy:
 
-*   **`shouldUseNativeTransport()` (`src/services/ble/transport/index.ts`)** — Determines whether the `AppDeviceBLE` native module (iOS) is available.
+*   **`shouldUseNativeTransport()` (`code-snippets/services/ble/transport/index.ts`)** — Determines whether the `AppDeviceBLE` native module (iOS) is available.
 *   **iOS Native Path** — When available, `BluetoothHandler` delegates core BLE operations to the Swift-based native module for deep CoreBluetooth integration.
 *   **`react-native-ble-plx` Fallback Path** — For Android and as a general fallback, `BluetoothHandler` directly manages `BleManager` from `react-native-ble-plx`.
 

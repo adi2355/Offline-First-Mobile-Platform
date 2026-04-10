@@ -391,7 +391,7 @@ The local data model is a cornerstone of the app's offline-first architecture, e
 
 ### Repository Boundaries
 
-*   All interactions with the database are encapsulated within **repositories** (`packages/app/src/repositories/`). This abstraction layer ensures that underlying database implementation details (e.g., raw SQL, Drizzle syntax) are hidden from application services.
+*   All interactions with the database are encapsulated within **repositories** (`packages/app/code-snippets/repositories/`). This abstraction layer ensures that underlying database implementation details (e.g., raw SQL, Drizzle syntax) are hidden from application services.
 *   Repositories are injected into services, following the Dependency Inversion Principle.
 
 ### Local Database as UI Source of Truth

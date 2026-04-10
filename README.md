@@ -313,7 +313,7 @@ For granular analysis of each subsystem, refer to the domain-specific documentat
 │   ├── demos/                              # App screen recordings & demo videos
 │   ├── diagrams/                           # Architecture & flow SVGs
 │   └── screenshots/                        # App screenshots (BLE, HealthKit, sync)
-├── src/                                    # TypeScript application source
+├── code-snippets/                          # TypeScript application source
 │   ├── constants/                          # App constants (BLE UUIDs, theme tokens)
 │   ├── contexts/                           # React contexts (Bluetooth)
 │   ├── db/
